@@ -1,0 +1,55 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/myQuiz.css" rel="stylesheet" type="text/css">
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("Home", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Create Quiz", "index", "CreateQuiz", new { area = "" }, new { @class = "navbar-brand" })
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        @foreach (var item in ViewBag.QuizList) {
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="~/resources/images/QuizImages/@item.Image" />
+            </div>
+            <div class="col-sm-5">
+                <span class="title">@item.Title</span><br />
+                Creator: <span class="creator"> @item.Creator</span><br />                                
+                <form method="post" action="~/EditQuiz/Index"> 
+                    <input type="hidden" name="ID" value="@item.ID"/>
+                    <input type="submit" value="Details" />
+                </form>
+            </div>
+            <div class="col-sm-3">
+                <span>Created day</span><br />
+                <span>Plays: </span><br />
+                <span><a>Play</a></span>
+            </div>                       
+           
+        </div>
+            
+        }
+    </div>
+</body>
+</html>

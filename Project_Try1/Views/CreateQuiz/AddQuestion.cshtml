@@ -1,0 +1,59 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateNewQuiz</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    
+    <link href="~/Content/questionOfAQuiz.css" rel="stylesheet" type="text/css">
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("OK. Save!", "SaveQuiz", "CreateQuiz", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Cancel", "CancelCreatingQuiz", "CreateQuiz", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+
+    Title: @Session["Title"] <br />
+    
+    <div id="imgContainer">
+       <img src="~/resources/images/QuizImages/@Session["Image"]" />
+    </div>
+    <div class="container">
+
+        @{
+            if (Session["QuestionList"] != null) {
+                var count = 0;
+                foreach (var item in (List<Project_Try1.Models.Question>)Session["QuestionList"]) {
+                    count++;
+                    <div class="queInQuiz">
+                        <span>Question @count : @item.Content</span><br/>                                                                      
+                    </div>                    
+                }
+            }
+        }
+
+    </div>
+
+
+    <a href="@Url.Action("QuestionDetails", "CreateQuiz")" class="elements">
+        <span>Add Question</span>
+    </a>
+
+
+</body>
+</html>

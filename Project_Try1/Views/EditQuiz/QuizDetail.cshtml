@@ -1,0 +1,48 @@
+﻿@model Project_Try1.Models.Quiz
+
+<link href="~/Content/quizDetails.css" rel="stylesheet" type="text/css">
+
+@{
+    ViewBag.Title = "View";
+}
+
+
+<div id="left">
+    <div id="img">
+        <img src="~/resources/images/QuizImages/@Model.Image" />
+    </div>
+    <div id="info">
+        <span>Title: @Model.Title</span><br />
+        <a>PLAY</a><br />
+        <span>@Model.Creator</span><br />
+        <span>Plays number</span><br/>  
+        @using(Html.BeginForm("EditQuiz", "EditQuiz")) {
+            <input type="hidden" name="ID" value="@Model.ID"/>
+            <input type="submit" value="EDIT"/>
+        }
+    </div>
+</div>
+
+<div id="right">
+    <h3>Questions</h3>
+    <div id="questions">
+        @foreach (var item in Model.QuestionList){
+            <div class="aQue">
+                <div class="content">
+                    <h3>@item.Content</h3>
+                    A. <span>@item.AnsA</span><br/>
+                    B. <span>@item.AnsB</span><br/>
+                    C. <span>@item.AnsC</span><br/>
+                    D. <span>@item.AnsD</span><br/>
+                    Answer: <span>@item.Answer</span>
+                </div>
+                <div class="queImg">
+                    <img src="~/resources/images/QuestionImages/@item.Image"/>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+

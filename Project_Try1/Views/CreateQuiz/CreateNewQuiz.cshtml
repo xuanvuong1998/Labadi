@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateNewQuiz</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/home.css" rel="stylesheet" type="text/css">
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("Cancel", "CancelCreatingQuiz", "CreateQuiz", new { area = "" }, new { @class = "navbar-brand" })                
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+    <h2>CREATE NEW QUIZ</h2>
+    <form action="~/CreateQuiz/AddQuestion" method="post">
+        Title: <input name="TxtTitle" /><br/>
+        Image: <input type="file" name="TxtImage" /><br/>
+        <input  type="submit" value="OK, GO!!!" />
+    </form>
+</body>
+</html>

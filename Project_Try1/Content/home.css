@@ -1,0 +1,40 @@
+﻿*{
+    font-size: 20px;
+    font-family: Tahoma;
+}
+
+
+#pageHeader{
+    margin-left: 35%;
+    margin-bottom: 50px;
+    color: chocolate;
+}
+.quiz {
+    height: 300px;
+    width: 30%;
+    float: left;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.title {
+    width: 100%;
+    height: 15%;
+}
+
+.imgContainer {
+    width: 100%;
+    height: 80%;    
+    
+}
+
+#img{
+    width: 200px;
+    height: 200px;    
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}

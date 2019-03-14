@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>QuestionDetails</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/myQuiz.css" rel="stylesheet" type="text/css">
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("Cancel", "CancelCreatingQuestion", "CreateQuiz", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+    <div>
+        <form action="~/CreateQuiz/AddQuestionToQuiz"  method="post">
+            Your Question? <input type="text" name="TxtContent" /><br />
+            Time <select name="TxtTime" >
+                <option value="10">10s</option>
+                <option value="20">20s</option>
+                <option value="30">30s</option>
+                <option value="60">60s</option>
+                <option value="90">90s</option>
+                <option value="120">120s</option>
+            </select><br />
+
+            A <input type="text" name="TxtC1" /><br />
+            B <input type="text" name="TxtC2" /><br />
+            C <input type="text" name="TxtC3" /><br />
+            D <input type="text" name="TxtC4" /><br />
+            Image <input type="file" name="TxtImage" />
+            Answer
+            <select name="TxtAns">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+            </select><br />
+
+            <input type="submit" value="Ok! Add To Quiz" />
+
+        </form>
+    </div>
+</body>
+</html>

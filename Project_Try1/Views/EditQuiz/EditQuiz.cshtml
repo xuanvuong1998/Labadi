@@ -1,0 +1,84 @@
+﻿@model Project_Try1.Models.Quiz
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditQuiz</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/editQuiz.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("BACK", "Index", "MyQuiz", new { area = "" }, new { @class = "navbar-brand" })
+
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+
+        <div class="row">
+            <div class="col-md-4">
+                <img src="~/resources/images/QuizImages/@Model.Image" />
+            </div>
+
+            <div class="col-md-6">
+                <h2>@Model.Title</h2>
+                @using (Html.BeginForm("EditDesp", "EditQuiz")) {
+                    <input type="hidden" name="ID" value="@Model.ID" />
+                    <input type="submit" value="Edit description" />
+                }
+            </div>
+        </div>
+
+        <hr />
+
+        <h3>Questions</h3>
+        @foreach (var item in @Model.QuestionList) {
+
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="~/resources/images/QuestionImages/@item.Image" />
+                </div>
+                <div class="col-md-4">
+                    <span class="content">@item.Content</span>
+                </div>
+                <div class="col-md-4">
+                    <span>Time: @item.Time</span><br />
+                    @using (Html.BeginForm("EditQuestion", "EditQuiz", FormMethod.Post)) {
+                        <input name="queID" type="hidden" value="@item.ID" /><br />
+                        <input id="edit" type="submit" value="Edit" /><br />
+                    }
+
+                    @using (Html.BeginForm("DeleteQuestion", "EditQuiz", FormMethod.Post)) {
+                        <input name="queID" type="hidden" value="@item.ID" /><br />
+                        <input id="edit" type="submit" value="Delete" /><br />
+                    }
+                    @using (Html.BeginForm("DuplicateQuestion", "EditQuiz", FormMethod.Post)) {
+                        <input name="queID" type="hidden" value="@item.ID" /><br />
+                        <input id="edit" type="submit" value="Duplicate" /><br />
+                    }
+                </div>
+            </div>
+
+        }
+
+    </div>
+
+</body>
+</html>

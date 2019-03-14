@@ -1,0 +1,75 @@
+﻿@model Project_Try1.Models.Question
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>QuestionDetails</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/myQuiz.css" rel="stylesheet" type="text/css">
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("Cancel", "CancelEdit", "EditQuiz", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+    <div>
+        <form action="~/EditQuiz/SaveQuestion" method="post">
+
+            <input type="hidden" name="quizID" value="@ViewBag.quizID" />
+            <input type="hidden" name="queID" value="@Model.ID" />
+
+
+            Your Question? <input type="text" name="TxtContent" value="@Model.Content" /><br />
+
+            @{
+                var timeList = new int[] { 10, 20, 30, 60, 90, 120 };
+            }
+
+            Time <select name="TxtTime">
+                @foreach (var t in timeList) {
+                    if (t == Model.Time) {
+                        <option value="@t" selected>@(t + "s") </option>
+                    } else {
+                        <option value="@t">@(t + "s") </option>
+                    }
+                }
+            </select><br />
+
+            A <input type="text" name="TxtC1" value="@Model.AnsA" /><br />
+            B <input type="text" name="TxtC2" value="@Model.AnsB" /><br />
+            C <input type="text" name="TxtC3" value="@Model.AnsC" /><br />
+            D <input type="text" name="TxtC4" value="@Model.AnsD" /><br />
+
+            Image <input type="file" name="TxtImage" value="@Model.Image" />
+
+            @{
+                var ansList = new string[] { "A", "B", "C", "D" };
+            }
+
+            Answer
+            <select name="TxtAns">
+                @foreach (var t in ansList) {
+                    if (t == Model.Answer) {
+                        <option value="@t" selected>@t </option>
+                    } else {
+                        <option value="@t">@t</option>
+                    }
+                }
+            </select><br />
+
+            <input type="submit" value="SAVE!!" />
+
+        </form>
+    </div>
+</body>
+</html>
