@@ -49,9 +49,10 @@ namespace Project_Try1.Models {
                                     AnsB = (string)reader["answerB"],
                                     AnsC = (string)reader["answerC"],
                                     AnsD = (string)reader["answerD"],
-                                    Answer = reader["answer"] == DBNull.Value ? "" : (string)reader["answer"],
-                                    Image = reader["qimage"] == DBNull.Value ? "" : (string)reader["qimage"],
-                                    Time = reader["qtime"] == DBNull.Value ? 0 : (int)reader["qtime"],
+                                    Answer = (string)reader["answer"],
+                                    Image = reader["qimage"] == DBNull.Value ?
+                                        "default.png" : (string)reader["qimage"],
+                                    Time = reader["qtime"] == DBNull.Value ? 60 : (int)reader["qtime"],
                                     Type = (int)reader["qtype"]
                                 };
 
@@ -92,8 +93,9 @@ namespace Project_Try1.Models {
                                     AnsB = (string)reader["answerB"],
                                     AnsC = (string)reader["answerC"],
                                     AnsD = (string)reader["answerD"],
-                                    Answer = reader["answer"] == DBNull.Value ? "" : (string)reader["answer"],
-                                    Image = reader["qimage"] == DBNull.Value ? "" : (string)reader["qimage"],
+                                    Answer = (string)reader["answer"],
+                                    Image = reader["qimage"] == DBNull.Value ?
+                                        "default.png" : (string)reader["qimage"],
                                     Time = reader["qtime"] == DBNull.Value ? 0 : (int)reader["qtime"],
                                     Type = (int)reader["qtype"]
                                 };
@@ -134,8 +136,9 @@ namespace Project_Try1.Models {
                                     AnsB = (string)reader["answerB"],
                                     AnsC = (string)reader["answerC"],
                                     AnsD = (string)reader["answerD"],
-                                    Answer = reader["answer"] == DBNull.Value ? "" : (string)reader["answer"],
-                                    Image = reader["qimage"] == DBNull.Value ? "" : (string)reader["qimage"],
+                                    Answer = (string)reader["answer"],
+                                    Image = reader["qimage"] == DBNull.Value ?
+                                        "default.png" : (string)reader["qimage"],
                                     Time = reader["qtime"] == DBNull.Value ? 0 : (int)reader["qtime"],
                                     Type = (int)reader["qtype"]
                                 };

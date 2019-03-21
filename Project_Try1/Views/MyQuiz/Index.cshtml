@@ -28,6 +28,14 @@
         </div>
     </div>
     <div class="container">
+
+        <div id="search">
+            <form action="~/MyQuiz/FindByName" method="post">
+                <input name="TxtSearch" />
+                <input type="submit" value="Search" />
+            </form>
+        </div>        
+
         @foreach (var item in ViewBag.QuizList) {
         <div class="row">
             <div class="col-sm-4">
@@ -44,7 +52,10 @@
             <div class="col-sm-3">
                 <span>Created day</span><br />
                 <span>Plays: </span><br />
-                <span><a>Play</a></span>
+                @using (Html.BeginForm("Index", "PlayQuiz")) {
+                    <input type="hidden" name="quizID" value="@item.ID"/>
+                    <input type="submit" value="PLAY"/>
+                }
             </div>                       
            
         </div>

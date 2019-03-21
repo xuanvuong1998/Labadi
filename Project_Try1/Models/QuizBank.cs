@@ -6,25 +6,17 @@ using System.Web;
 
 namespace Project_Try1.Models {
     public class Quiz {
+
         public int ID { get; set; }
         public string Title { get; set; }
         public string Image { get; set; }
         public string Creator { get; set; }
 
+
         public List<Question> QuestionList { get; set; }
 
-        public void AddQuestionToQuiz(Question aQue) {
-            QuestionList.Add(aQue);
-        }
 
-        public void RemoveQuestionFromQuiz(Question aQue) {
-            QuestionList.Remove(aQue);
-        }
 
-        public void UpdateQuestionInQuiz(Question aQue) {
-            Question q = QuestionList.SingleOrDefault(item => item.ID == aQue.ID);
-            q = aQue;
-        }
     }
 
     public class QuizBank {
@@ -52,7 +44,8 @@ namespace Project_Try1.Models {
                                         Creator = (string)reader["creator"],
                                         ID = quizID,
                                         Title = (string)reader["title"],
-                                        Image = reader["image"] == DBNull.Value ? "" : (string)reader["image"],
+                                        Image = reader["image"] == DBNull.Value
+                                            ? "default.png" : (string)reader["image"],
                                         QuestionList = questionDM.FindQuestionByQuizID(quizID)
                                     };
 
@@ -95,7 +88,8 @@ namespace Project_Try1.Models {
                                         Creator = (string)reader["creator"],
                                         ID = quizID,
                                         Title = (string)reader["title"],
-                                        Image = reader["image"] == DBNull.Value ? "" : (string)reader["image"],
+                                        Image = reader["image"] == DBNull.Value
+                                            ? "default.png" : (string)reader["image"],
                                         QuestionList = questionDM.FindQuestionByQuizID(quizID)
                                     };
 
@@ -122,7 +116,7 @@ namespace Project_Try1.Models {
 
             try {
                 using (var con = DBUtils.GetConnection()) {
-                    con.Open();                    
+                    con.Open();
                     using (var cmd = new SqlCommand("GetMaxQuizID", con)) {
                         var reader = cmd.ExecuteReader();
                         if (reader.Read()) {
@@ -140,7 +134,7 @@ namespace Project_Try1.Models {
         }
 
         public Quiz FindQuizByID(int id) {
-            try {                
+            try {
                 using (var con = DBUtils.GetConnection()) {
                     con.Open();
                     using (var cmd = new SqlCommand("FindQuizByID", con)) {
@@ -158,18 +152,55 @@ namespace Project_Try1.Models {
                                     Creator = (string)reader["creator"],
                                     ID = quizID,
                                     Title = (string)reader["title"],
-                                    Image = reader["image"] == DBNull.Value ? "" : (string)reader["image"],
+                                    Image = reader["image"] == DBNull.Value
+                                            ? "default.png" : (string)reader["image"],
                                     QuestionList = questionDM.FindQuestionByQuizID(quizID)
                                 };
-                                return q;      
+                                return q;
                             }
                         }
-                    }                    
+                    }
                 }
             } catch (Exception e) {
                 throw e;
             }
             return null;
+        }
+
+        public List<Quiz> FindQuizzesByName(string searchName) {
+            List<Quiz> list = null;
+            try {
+                using (var con = DBUtils.GetConnection()) {
+                    using (var cmd = new SqlCommand("FindQuizzesByName", con)) {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@name", searchName);
+
+                        con.Open();
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read()) {
+                            if (list == null) {
+                                list = new List<Quiz>();
+                            }
+
+                            Quiz q = new Quiz {
+                                ID = (int)reader["id"],
+                                Title = (string)reader["title"],
+                                Image = (string)reader["image"],
+                                Creator = (string)reader["creator"]
+                            };
+
+                            list.Add(q);
+                           
+                        }
+                    }
+                }
+            } catch (Exception e) {
+
+                throw e;
+            }
+            return list;
         }
 
         public void AddNewQuiz(Quiz q) {
@@ -179,7 +210,7 @@ namespace Project_Try1.Models {
                     using (var cmd = new SqlCommand("AddNewQuiz", con)) {
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@id", q.ID);
-                        cmd.Parameters.AddWithValue("@creator", q.Creator);                        
+                        cmd.Parameters.AddWithValue("@creator", q.Creator);
                         cmd.Parameters.AddWithValue("@title", q.Title);
                         cmd.Parameters.AddWithValue("@image", q.Image);
                         cmd.ExecuteNonQuery();
@@ -187,7 +218,7 @@ namespace Project_Try1.Models {
                 }
 
                 QuestionDM dM = new QuestionDM();
-                foreach(var item in q.QuestionList) {
+                foreach (var item in q.QuestionList) {
                     dM.AddQuestion(item);
                 }
             } catch (Exception e) {

@@ -10,6 +10,8 @@ namespace Project_Try1.Controllers
     public class HomeController : Controller
     {
         // GET: Test
+
+        [Authorize]
         public ActionResult Home()
         {
 

@@ -20,6 +20,13 @@
     font-weight:bold;
 }
 
+#search form{
+    padding-left: 35%;
+    padding-bottom: 10%;
+    padding-top: 5%;
+    font-size: 25px;
+}
+
 .info{
     
 }

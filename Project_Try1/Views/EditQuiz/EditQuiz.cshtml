@@ -1,5 +1,8 @@
 ﻿@model Project_Try1.Models.Quiz
 
+@{ 
+    Layout = null;
+}
 <!DOCTYPE html>
 
 <html>
@@ -48,35 +51,49 @@
 
         <hr />
 
-        <h3>Questions</h3>
-        @foreach (var item in @Model.QuestionList) {
+        <h2>Questions</h2>
+        <h3>
+            @using (Html.BeginForm("AddQuestion", "EditQuiz")) {
+                <input type="hidden" name="quizID" value="@Model.ID"/>
+                <input value="Add more question" type="submit" />
+            }
+        </h3>
+        @if (Model.QuestionList == null) {
+            <h2>There is not any question yet</h2>
+        } else {
 
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="~/resources/images/QuestionImages/@item.Image" />
-                </div>
-                <div class="col-md-4">
-                    <span class="content">@item.Content</span>
-                </div>
-                <div class="col-md-4">
-                    <span>Time: @item.Time</span><br />
-                    @using (Html.BeginForm("EditQuestion", "EditQuiz", FormMethod.Post)) {
-                        <input name="queID" type="hidden" value="@item.ID" /><br />
-                        <input id="edit" type="submit" value="Edit" /><br />
-                    }
+            foreach (var item in @Model.QuestionList) {
 
-                    @using (Html.BeginForm("DeleteQuestion", "EditQuiz", FormMethod.Post)) {
-                        <input name="queID" type="hidden" value="@item.ID" /><br />
-                        <input id="edit" type="submit" value="Delete" /><br />
-                    }
-                    @using (Html.BeginForm("DuplicateQuestion", "EditQuiz", FormMethod.Post)) {
-                        <input name="queID" type="hidden" value="@item.ID" /><br />
-                        <input id="edit" type="submit" value="Duplicate" /><br />
-                    }
-                </div>
-            </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="~/resources/images/QuestionImages/@item.Image" />
+                    </div>
+                    <div class="col-md-4">
+                        <span class="content">@item.Content</span>
+                    </div>
+                    <div class="col-md-4">
+                        <span>Time: @item.Time</span><br />
+                        @using (Html.BeginForm("EditQuestion", "EditQuiz", FormMethod.Post)) {
+                            
+                            <input name="queID" type="hidden" value="@item.ID" /><br />
+                            <input id="edit" type="submit" value="Edit" /><br />
+                        }
 
+                        @using (Html.BeginForm("DeleteQuestion", "EditQuiz", FormMethod.Post)) {
+                            
+                            <input name="queID" type="hidden" value="@item.ID" /><br />
+                            <input id="edit" type="submit" value="Delete" /><br />
+                        }
+                        @using (Html.BeginForm("DuplicateQuestion", "EditQuiz", FormMethod.Post)) {                            
+                            <input name="queID" type="hidden" value="@item.ID" /><br />
+                            <input id="edit" type="submit" value="Duplicate" /><br />
+                        }
+                    </div>
+                </div>
+
+            }
         }
+
 
     </div>
 

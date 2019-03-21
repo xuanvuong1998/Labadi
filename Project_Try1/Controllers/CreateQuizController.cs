@@ -8,13 +8,15 @@ using System.Web.Mvc;
 namespace Project_Try1.Controllers {
     public class CreateQuizController : Controller {
         // GET: CreateQuiz
+        [Authorize]
         public ActionResult Index() {
             return View("CreateNewQuiz");
         }
-
+        [Authorize]
         public ActionResult QuestionDetails() {
             return View("QuestionDetails");
         }
+        [Authorize]
         public ActionResult AddQuestion(FormCollection frm) {
             string title = frm["TxtTitle"];
             string image = frm["TxtImage"];
@@ -30,6 +32,7 @@ namespace Project_Try1.Controllers {
 
         }
 
+        [Authorize]
         public ActionResult AddQuestionToQuiz(FormCollection frm) {
             dynamic list = Session["QuestionList"];
             
@@ -61,6 +64,7 @@ namespace Project_Try1.Controllers {
             return View("AddQuestion");
         }
 
+        [Authorize]
         public RedirectToRouteResult CancelCreatingQuiz() {
             Session["QuestionList"] = null;
             Session["Title"] = null;
@@ -70,11 +74,13 @@ namespace Project_Try1.Controllers {
             return RedirectToAction("Index", "MyQuiz");
         }
 
+        [Authorize]
         public ActionResult CancelCreatingQuestion() {
 
             return View("AddQuestion");
         }
 
+        [Authorize]
         public RedirectToRouteResult SaveQuiz() {
             var queList = (List<Question>) Session["Questionlist"];
 
