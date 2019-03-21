@@ -35,7 +35,7 @@ namespace Project_Try1.Controllers {
         [Authorize]
         public ActionResult AddQuestionToQuiz(FormCollection frm) {
             dynamic list = Session["QuestionList"];
-            
+
             if (list == null) {
                 list = new List<Question>();
             }
@@ -48,7 +48,7 @@ namespace Project_Try1.Controllers {
             string image = frm["TxtImage"];
 
             Question q = new Question {
-                Content = frm["TxtContent"],                
+                Content = frm["TxtContent"],
                 AnsA = c1,
                 AnsB = c2,
                 AnsC = c3,
@@ -57,7 +57,7 @@ namespace Project_Try1.Controllers {
                 Answer = ans,
                 Image = image
             };
-            
+
             list.Add(q);
             Session["QuestionList"] = list;
 
@@ -68,8 +68,8 @@ namespace Project_Try1.Controllers {
         public RedirectToRouteResult CancelCreatingQuiz() {
             Session["QuestionList"] = null;
             Session["Title"] = null;
-            Session["Image"] = null;            
-            
+            Session["Image"] = null;
+
 
             return RedirectToAction("Index", "MyQuiz");
         }
@@ -82,36 +82,41 @@ namespace Project_Try1.Controllers {
 
         [Authorize]
         public RedirectToRouteResult SaveQuiz() {
-            var queList = (List<Question>) Session["Questionlist"];
+            var queList = (List<Question>)Session["Questionlist"];
 
             QuestionDM queDM = new QuestionDM();
             QuizBank quizBank = new QuizBank();
 
             Quiz q = new Quiz {
                 ID = quizBank.GetMaxID() + 1,
-                Title = (string) Session["Title"],
-                Image = (string) Session["Image"],
-                Creator = (string) Session["Creator"],     
+                Title = (string)Session["Title"],
+                Image = (string)Session["Image"],
+                Creator = (string)Session["Creator"],
                 QuestionList = new List<Question>()
             };
 
-            
-            int maxID = queDM.GetMaxID();
-            foreach(var item in queList) {
-                item.ID = ++maxID;
-                item.QuizID = q.ID;
-                q.QuestionList.Add(item);                               
-            }
 
+            if (string.IsNullOrEmpty(q.Image)) {
+                q.Image = "default.png";
+            }
+            int maxID = queDM.GetMaxID();
+
+            if (queList != null) {
+                foreach (var item in queList) {
+                    item.ID = ++maxID;
+                    item.QuizID = q.ID;
+                    q.QuestionList.Add(item);
+                }
+
+            }
             quizBank.AddNewQuiz(q);
 
             Session["Title"] = null;
-            Session["Image"] = null;            
+            Session["Image"] = null;
             Session["QuestionList"] = null;
-            
 
             return RedirectToAction("index", "MyQuiz");
-            
+
         }
 
     }

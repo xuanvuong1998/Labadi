@@ -17,6 +17,14 @@ namespace Project_Try1.Controllers {
             Quiz q = quizes.FindQuizByID(id);
             return View("QuizDetail", q);
         }
+
+        [Authorize]
+        public ActionResult DeleteQuiz(string quizID) {
+            QuizBank bank = new QuizBank();
+            bank.DeleteQuiz(int.Parse(quizID));
+            return Redirect("/MyQuiz/Index");
+        }
+
         [Authorize]
         public ActionResult EditQuiz(string ID) {
 

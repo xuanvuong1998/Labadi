@@ -34,33 +34,42 @@
                 <input name="TxtSearch" />
                 <input type="submit" value="Search" />
             </form>
-        </div>        
-
-        @foreach (var item in ViewBag.QuizList) {
-        <div class="row">
-            <div class="col-sm-4">
-                <img src="~/resources/images/QuizImages/@item.Image" />
-            </div>
-            <div class="col-sm-5">
-                <span class="title">@item.Title</span><br />
-                Creator: <span class="creator"> @item.Creator</span><br />                                
-                <form method="post" action="~/EditQuiz/Index"> 
-                    <input type="hidden" name="ID" value="@item.ID"/>
-                    <input type="submit" value="Details" />
-                </form>
-            </div>
-            <div class="col-sm-3">
-                <span>Created day</span><br />
-                <span>Plays: </span><br />
-                @using (Html.BeginForm("Index", "PlayQuiz")) {
-                    <input type="hidden" name="quizID" value="@item.ID"/>
-                    <input type="submit" value="PLAY"/>
-                }
-            </div>                       
-           
         </div>
-            
+
+        @if (ViewBag.QuizList == null) {
+            <h2>No Quizz found!!!</h2>
+        } else {
+            foreach (var item in ViewBag.QuizList) {
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img src="~/resources/images/QuizImages/@item.Image" />
+                    </div>
+                    <div class="col-sm-5">
+                        <span class="title">@item.Title</span><br />
+                        Creator: <span class="creator"> @item.Creator</span><br />
+                        <form method="post" action="~/EditQuiz/Index">
+                            <input type="hidden" name="ID" value="@item.ID" />
+                            <input type="submit" value="Details" />
+                        </form>
+                        @using (Html.BeginForm("DeleteQuiz", "EditQuiz")) {
+                            <input type="hidden" name="quizID" value="@item.ID"/>
+                            <input type="submit" onclick="return confirm('are you sure???')" value="Delete this quiz"/>
+                        }
+                    </div>
+                    <div class="col-sm-3">
+                        <span>Created day</span><br />
+                        <span>Plays: </span><br />
+                        @using (Html.BeginForm("Index", "PlayQuiz")) {
+                            <input type="hidden" name="quizID" value="@item.ID" />
+                            <input type="submit" value="PLAY" />
+                        }
+                    </div>
+
+                </div>
+
+            }
         }
+
     </div>
 </body>
 </html>

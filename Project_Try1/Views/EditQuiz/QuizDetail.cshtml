@@ -6,7 +6,6 @@
     ViewBag.Title = "View";
 }
 
-
 <div id="left">
     <div id="img">
         <img src="~/resources/images/QuizImages/@Model.Image" />
@@ -14,8 +13,8 @@
     <div id="info">
         <span>Title: @Model.Title</span><br />
         <a>PLAY</a><br />
-        <span>@Model.Creator</span><br />
-        <span>Plays number</span><br />
+        <span>Creator: @Model.Creator</span><br />
+        <span>Plays: </span><br />
         @using (Html.BeginForm("EditQuiz", "EditQuiz")) {
             <input type="hidden" name="ID" value="@Model.ID" />
             <input type="submit" value="EDIT" />

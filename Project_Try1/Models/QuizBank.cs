@@ -244,5 +244,22 @@ namespace Project_Try1.Models {
                 throw e;
             }
         }
+
+        public void DeleteQuiz(int id) {
+            try {
+                new QuestionDM().DeleteQuestionsOfAQuiz(id);
+                using (var con = DBUtils.GetConnection()) {
+                    using (var cmd = new SqlCommand("DeleteQuiz", con)) {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", id);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            } catch (Exception e)  {
+
+                throw e;
+            }
+        }
     }
 }

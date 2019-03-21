@@ -191,6 +191,11 @@ namespace Project_Try1.Models {
                         cmd.Parameters.AddWithValue("@qtype", q.Type);
                         cmd.Parameters.AddWithValue("@queContent", q.Content);
                         cmd.Parameters.AddWithValue("@qTime", q.Time);
+
+                        if (string.IsNullOrEmpty(q.Image)) {
+                            q.Image = "default.png";
+                        }
+
                         cmd.Parameters.AddWithValue("@qImage", q.Image);
                         cmd.ExecuteNonQuery();
                     }
@@ -215,6 +220,11 @@ namespace Project_Try1.Models {
                         cmd.Parameters.AddWithValue("@answerD", q.AnsD);
                         cmd.Parameters.AddWithValue("@queContent", q.Content);
                         cmd.Parameters.AddWithValue("@qTime", q.Time);
+
+                        
+                        if (string.IsNullOrEmpty(q.Image)) {
+                            q.Image = "default.png";
+                        }
                         cmd.Parameters.AddWithValue("@qImage", q.Image);
                         cmd.ExecuteNonQuery();
                     }
@@ -231,6 +241,22 @@ namespace Project_Try1.Models {
                     using (var cmd = new SqlCommand("DeleteQuestion", con)) {
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@id", id);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            } catch (Exception e) {
+
+                throw e;
+            }
+        }
+
+        public void DeleteQuestionsOfAQuiz(int quizID) {
+            try {
+                using (var con = DBUtils.GetConnection()) {
+                    con.Open();
+                    using (var cmd = new SqlCommand("DeleteQuestionsOfAQuiz", con)) {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", quizID);
                         cmd.ExecuteNonQuery();
                     }
                 }
