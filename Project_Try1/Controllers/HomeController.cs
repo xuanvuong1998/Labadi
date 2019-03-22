@@ -24,5 +24,11 @@ namespace Project_Try1.Controllers
             
             return View();
         }
+        public RedirectToRouteResult Logout()
+        {
+
+            Session["creator"] = null;
+            return RedirectToAction("Index", "Login");
+        }
     }
 }

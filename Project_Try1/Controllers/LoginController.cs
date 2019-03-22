@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using System.Web.Security;
 
 namespace Project_Try1.Controllers
@@ -13,12 +14,11 @@ namespace Project_Try1.Controllers
         // GET: Login
         public ActionResult Index()
         {
+            ViewBag.Message = TempData["error"];
             return View();
         }
 
-        public ActionResult Fail() {
-            return View("LoginFail");
-        }
+      
 
         AccountData ac = new AccountData();
         [HttpPost]
@@ -30,8 +30,11 @@ namespace Project_Try1.Controllers
                 FormsAuthentication.SetAuthCookie(username, false);
                 Session["creator"] = username;
                 return RedirectToAction("Home", "Home");
-            } else {
-                return RedirectToAction("Fail", "Login");
+            } else
+            {
+                TempData["error"] = "Username or password was wrong! Try again! ";
+                //return RedirectToAction("Index", "Login");
+                return RedirectToAction("Index", "Login");
             }          
         }
     }

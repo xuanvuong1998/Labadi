@@ -1,37 +1,63 @@
 ﻿using Project_Try1.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace Project_Try1.Controllers {
     public class CreateQuizController : Controller {
         // GET: CreateQuiz
         [Authorize]
+        
         public ActionResult Index() {
+            
+            return View("CreateNewQuiz");
+        }
+
+        [HttpPost]
+        public ActionResult PostImage(HttpPostedFileBase file, FormCollection frm)
+        {
+            string title = frm["TxtTitle"];
+            if (file != null && file.ContentLength > 0)
+                try
+                {
+                    string path = Path.Combine(Server.MapPath("~/resources/images/QuizImages"),
+                        Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+
+                    // WebImage belong to WebHelper class which supports the crop, flip, watermark operation etc.
+                    WebImage img = new WebImage(file.InputStream);
+                    if (img.Width > 1200)
+                        img.Resize(1200, 600);
+                    img.Save(path);
+
+
+                    ViewBag.Message = "File uploaded successfully";
+                    Session["Title"] = title;
+                    Session["Image"] = file.FileName;
+
+                    return View("AddQuestion");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
+            else
+            {
+                ViewBag.Message = "You have not specified a file.";
+            }
+          
             return View("CreateNewQuiz");
         }
         [Authorize]
         public ActionResult QuestionDetails() {
             return View("QuestionDetails");
         }
-        [Authorize]
-        public ActionResult AddQuestion(FormCollection frm) {
-            string title = frm["TxtTitle"];
-            string image = frm["TxtImage"];
-
-
-            //ViewBag.Title = title;
-            //ViewBag.Image = image;
-
-            Session["Title"] = title;
-            Session["Image"] = image;
-
-            return View("AddQuestion");
-
-        }
-
+  
         [Authorize]
         public ActionResult AddQuestionToQuiz(FormCollection frm) {
             dynamic list = Session["QuestionList"];

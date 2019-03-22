@@ -103,9 +103,13 @@
                         </div>
 
                         <div class="p-t-15">
+                          
                             <button id="submit-butt" class="btn btn--radius-2 btn--blue" type="button" onclick="submitFrm();">Submit</button>
+                            @Html.ActionLink("Back to login  ", "Index", "Login",new { area = "" }, new { @class = "backlogin" })
                         </div>
                     </form>
+                    
+                  
                 </div>
             </div>
         </div>
@@ -163,7 +167,7 @@
                         ok = true;
                     }
                 });
-            
+            return ok;
         }
 
 

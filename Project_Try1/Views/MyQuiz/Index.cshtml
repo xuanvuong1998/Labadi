@@ -12,62 +12,123 @@
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/myQuiz.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="~/resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Cabin+Condensed|Lalezar|Open+Sans+Condensed:300|Righteous|Thasadith" rel="stylesheet">
+
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <style>
+        body {
+            /*background-color: rgb(237, 238, 239);*/
+            background-color: white;
+        }
+
+        
+    </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+
+    <nav class="main-menu navbar navbar-default navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                @Html.ActionLink("Home", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Create Quiz", "index", "CreateQuiz", new { area = "" }, new { @class = "navbar-brand" })
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
 
+                </button>
+
+                @Html.ActionLink("Labadi.ml", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav"></ul>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="hidden">
+
+                    </li>
+                    <li class="page-scroll">
+
+                    </li>
+                    <li class="page-scroll">
+                        @Html.ActionLink("Create Quiz", "index", "CreateQuiz", new { area = "" }, new { @class = "" })
+                    </li>
+                    <li class="page-scroll">
+                        @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "" })
+
+                    </li>
+                   
+                </ul>
             </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <!-- /.navbar-collapse -->
         </div>
-    </div>
+        <!-- /.container-fluid -->
+    </nav>
+
     <div class="container">
+       
+        <form class="form-horizontal" action="~/MyQuiz/FindByName" method="post">
+            <div class="form-group">
 
-        <div id="search">
-            <form action="~/MyQuiz/FindByName" method="post">
-                <input name="TxtSearch" />
-                <input type="submit" value="Search" />
-            </form>
-        </div>
+                <div class="col-sm-10">
+                    <input class="form-control" name="TxtSearch" id="focusedInput" type="text" value="Type somethings to find on Labadi.ml ...">
 
-        @if (ViewBag.QuizList == null) {
-            <h2>No Quizz found!!!</h2>
-        } else {
-            foreach (var item in ViewBag.QuizList) {
-                <div class="row">
-                    <div class="col-sm-4">
-                        <img src="~/resources/images/QuizImages/@item.Image" />
-                    </div>
-                    <div class="col-sm-5">
-                        <span class="title">@item.Title</span><br />
-                        Creator: <span class="creator"> @item.Creator</span><br />
-                        <form method="post" action="~/EditQuiz/Index">
-                            <input type="hidden" name="ID" value="@item.ID" />
-                            <input type="submit" value="Details" />
-                        </form>
-                        @using (Html.BeginForm("DeleteQuiz", "EditQuiz")) {
-                            <input type="hidden" name="quizID" value="@item.ID"/>
-                            <input type="submit" onclick="return confirm('are you sure???')" value="Delete this quiz"/>
-                        }
-                    </div>
-                    <div class="col-sm-3">
-                        <span>Created day</span><br />
-                        <span>Plays: </span><br />
-                        @using (Html.BeginForm("Index", "PlayQuiz")) {
-                            <input type="hidden" name="quizID" value="@item.ID" />
-                            <input type="submit" value="PLAY" />
-                        }
-                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <button class="butt" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
 
                 </div>
 
-            }
+            </div>
+        </form>
+
+        @if (ViewBag.QuizList == null)
+        {
+            <h2>No Quizz found!!!</h2>
+        }
+        else
+        {
+            <div class="row">
+                @foreach (var item in ViewBag.QuizList)
+                {
+
+                    <div class="quiz-in-my-quiz col-md-5">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <a href="#">
+                                    <img class="img-my-quiz" src="~/resources/images/QuizImages/@item.Image" />
+                                </a>
+                            </div>
+                            <div class="col-md-5">
+                                <h3 class="quiz-title-myquiz">@item.Title</h3>
+                                <p>Creator: <span>@item.Creator</span> </p>
+
+
+                            </div>
+                        </div>
+                        <div class="row col-md-12 button-bar">
+
+                            <a class="btn btn-success" href="#">View Project</a>
+                            <form method="post" action="~/EditQuiz/Index" style="display: inline-block;">
+                                <input type="hidden" name="ID" value="@item.ID" /> <br />
+                                <input class="btn btn-primary" type="submit" value="Details" />
+                            </form>
+                            @using (Html.BeginForm("DeleteQuiz", "EditQuiz", FormMethod.Get, new { style = "display: inline-block;" }))
+                            {
+                                <input type="hidden" name="quizID" value="@item.ID" /><br />
+                                <input class="btn btn-warning" type="submit" onclick="return confirm('are you sure???')" value="Delete this quiz" />
+                            }
+                            @using (Html.BeginForm("Index", "PlayQuiz", FormMethod.Get, new { style = "display: inline-block;" }))
+                            {
+                                <input type="hidden" name="quizID" value="@item.ID" /><br />
+                                <input class="btn btn-danger" type="submit" value="Play" />
+                            }
+                        </div>
+                    </div>
+
+
+
+                }
+            </div>
         }
 
     </div>

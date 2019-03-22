@@ -1,10 +1,31 @@
 
-/* ==========================================================================
+
+
+
+.backlogin {
+    padding: 12px;
+    margin-left: 100px;
+    text-decoration: none;
+    font-size: 14px;
+    color: black;
+    text-justify: initial;
+    transition: all 0.3s;
+    border-radius: 5px;
+                
+}
+    .backlogin:hover {
+
+        color: darkred;
+        font-size: 17px;
+
+
+    }
+    /* ==========================================================================
    #FONT
    ========================================================================== */
-.font-robo {
-  font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
-}
+    .font-robo {
+        font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
+    }
 
 .font-poppins {
   font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
