@@ -6,45 +6,84 @@
     <title>Home</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/home.css" rel="stylesheet" type="text/css" />    
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <link href="~/Content/home.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Open+Sans+Condensed:300|Righteous" rel="stylesheet">
 
+
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <style>
+       
+    </style>
 </head>
-<body>    
-    
-    <div class="navbar navbar-inverse navbar-fixed-top">
+<body>
+    <nav class="main-menu navbar navbar-default navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+
                 </button>
-                @Html.ActionLink("Home", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("My Library", "index", "MyQuiz", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Create my Quiz", "Index", "CreateQuiz", new { area = "" }, new { @class = "navbar-brand" })
-                
+
+                @Html.ActionLink("Labadi.ml", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav"></ul>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="hidden">
+
+                    </li>
+                    <li class="page-scroll">
+
+                    </li>
+                    <li class="page-scroll">
+                        @Html.ActionLink("My Library", "index", "MyQuiz", new { area = "" }, new { @class = "myquiz " })
+                    </li>
+                    <li class="page-scroll">
+                        @Html.ActionLink("Create my Quiz", "Index", "CreateQuiz", new { area = "" }, new { @class = "creat-quiz " })
+                    </li>
+                    <li class="page-scroll">
+                        @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "" })
+
+                    </li>
+                </ul>
             </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <!-- /.navbar-collapse -->
         </div>
-    </div>
+        <!-- /.container-fluid -->
+    </nav>
+
     <h2 id="pageHeader">Top Quizes in the World</h2>
     <div class="container">
-        <div class="row1">                          
-           @foreach (var item in ViewBag.QuizBank) {
-               <div class="quiz">
-                   <div class="title">
-                       <span>@item.Title </span><br/>
-                       <span><a>PLAY</a></span>
-                   </div>
-                   <div class="imgContainer">
-                       <img class="img" src="~/resources/images/QuizImages/@item.Image"/>
-                   </div>
-               </div>
-           }
+        <div class="row">
+            @foreach (var item in ViewBag.QuizBank)
+            {
+                <div class="quiz-home col-xs-6 col-sm-3 col-md-3 col-lg-3">
+
+                    <div class="thumbnail">
+
+                        <div class="caption text-center">
+
+                            <img src="~/resources/images/QuizImages/@item.Image" class="img" />
+                            <h3 class="quiz-title">@item.Title</h3>
+                            <p>
+                                <a href="#" class="btn btn-danger">Play now</a>
+                                <a href="#" class="btn btn-success">Details</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+
+
+
+
         </div>
+
+
     </div>
 </body>
 </html>

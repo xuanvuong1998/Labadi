@@ -61,10 +61,11 @@
                         <span class="symbol-input100">
                             <i class="fa fa-lock" aria-hidden="true"></i>
                         </span>
-                        <font id="err-password"></font>
+                     
                     </div>
 
                     <div class="container-login100-form-btn">
+                        <font class="text-danger">@ViewBag.Message</font>
                         <button id="login" onclick="checkRequired('username', 'err-username', 'Username')" class="login100-form-btn">
                             Login
                         </button>

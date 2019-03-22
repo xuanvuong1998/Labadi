@@ -1,4 +1,5 @@
-﻿
+﻿@using System.Web.UI.WebControls
+
 @{
     Layout = null;
 }
@@ -15,21 +16,50 @@
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                @Html.ActionLink("Cancel", "CancelCreatingQuiz", "CreateQuiz", new { area = "" }, new { @class = "navbar-brand" })                
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav"></ul>
-            </div>
+
+
+<nav class="main-menu navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+
+            </button>
+
+            @Html.ActionLink("Labadi.ml", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
         </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+
+                <li class="hidden">
+
+                </li>
+                <li class="page-scroll">
+
+                </li>
+                <li class="page-scroll">
+                    @Html.ActionLink("Cancel", "CancelCreatingQuiz", "CreateQuiz", new {area = ""}, new {@class = ""})
+                </li>
+                <li class="page-scroll">
+                    @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "" })
+
+                </li>
+                   
+            </ul>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- /.navbar-collapse -->
     </div>
-    <h2>CREATE NEW QUIZ</h2>
-    <form action="~/CreateQuiz/AddQuestion" method="post">
-        Title: <input name="TxtTitle" /><br/>
-        Image: <input type="file" name="TxtImage" /><br/>
-        <input  type="submit" value="OK, GO!!!" />
-    </form>
+    <!-- /.container-fluid -->
+</nav>
+<h2>CREATE NEW QUIZ</h2>
+<form action="~/CreateQuiz/PostImage" method="post" enctype="multipart/form-data">
+    Title: <input name="TxtTitle"/><br/>
+    Image: <input type="file" name="file"/><br/>
+    <input type="submit" value="OK, GO!!!"/>
+    <label>@ViewBag.Message</label>
+</form>
+
 </body>
 </html>

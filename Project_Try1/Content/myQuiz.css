@@ -27,9 +27,7 @@
     font-size: 25px;
 }
 
-.info{
-    
-}
+
 .title{
     color: crimson;
     font-size: 24px;    
@@ -40,6 +38,77 @@
     text-align: right;
 }
 img{
+    width: 100%;
+    height: 100%;
+}
+.navbar-default {
+    background-color: rgb(3, 55, 168);
+}
+.main-menu *{
+         
+    font-family: 'Righteous', cursive !important;
+
+    color: white !important;
+
+}
+
+.navbar-brand {
+    padding-left: 30px;
+    font-size: 30px !important;
+}
+.search-bar {
+    height: 50px;
+    margin: 50px 0 50px 0;
+}
+
+.quiz-title-myquiz {
+    font-family: 'Cabin Condensed', sans-serif;
+    font-size: 25px;
+    font-weight: bolder;
+    color: darkslategrey;
+}
+
+.quiz-in-my-quiz {
+    padding: 20px;
+    border-radius: 5px;
+    border: 0.5px solid gainsboro;
+    margin-bottom: 20px;
+    margin-right: 5%;
+    background-color: white;
+    box-shadow: 4px 5px rgb(239, 240, 242);
+}
+
+.form-horizontal {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.img-my-quiz {
+    height: 200px;
+}
+
+.form-horizontal input {
+    width: 100%;
+    height: 60px;
+    max-width: none;
+    border-bottom: 0.5px solid gainsboro;
+    color: gray;
+    font-weight: lighter;
+    font-family: 'Thasadith', sans-serif;
+    font-size: 22px;
+}
+
+.butt {
+    background-color: transparent;
+    border: none;
+    height: 60px;
+    width: 60%;
+    line-height: 60px;
+    text-align: center
+}
+
+.butt > i {
+    font-size: 45px;
     width: 100%;
     height: 100%;
 }
