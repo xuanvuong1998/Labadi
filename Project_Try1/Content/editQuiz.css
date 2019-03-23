@@ -1,25 +1,53 @@
-﻿#des{
-    width: 100%;
-    height: 20%;
-}
+﻿ .img-edit-quiz {
+     max-height: 300px;
+     border-radius: 5px;
+     box-shadow: gainsboro 5px 5px;
+     text-align: center;
+     overflow: hidden;
+ }
 
-.imgContainer{
-    width: 300px;    
-}
+ .img-edit-quiz > img {
+     height: 100%;
+     width: 100%;
+ }
 
-img{
-    max-width: 100%;
-    max-height: 100%;
-}
+ .right-col-edit {
+     padding: 30px 20px;
+     font-family: 'Baloo Chettan', cursive;
+     color: rgb(114, 12, 21);
+     font-size: 45px;
+ }
 
-.content{
-    font-size: 20px;
+ .main-div-edit-quiz {
+     margin-top: 30px;
+ }
 
-}
+ .button-format {
+     /*margin-bottom: 30px;*/
+     padding: 0 5px;
+     /*width: 200px;*/
+     height: 50px;
+     line-height: 50px;
+     border-radius: 10px;
+     transition: ease-in-out 0.3s;
+     box-shadow: antiquewhite 5px 5px;
+     font-size: 25px;
+     font-family: 'Righteous';
+     text-align: center;
+     color: rgb(6, 4, 66);
+ }
 
-#title{
-    width: 60%;
-    float:left;
+ .button-format:hover {
+     transform: scale(1.05);
+ }
 
-}
+ .button-format * {
+     font-size: 25px;
+     font-family: 'Righteous';
+ }
 
+ .question-title-edit-quiz *{
+     font-size: 25px;
+     color: darkblue;
+     font-family: 'Baloo Chettan', cursive;
+ }

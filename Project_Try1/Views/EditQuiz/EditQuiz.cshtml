@@ -1,6 +1,6 @@
 ﻿@model Project_Try1.Models.Quiz
 
-@{ 
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -12,90 +12,201 @@
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/editQuiz.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/home.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <link rel="stylesheet" href="~/resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/css?family=Cabin+Condensed|Lalezar|Open+Sans+Condensed:300|Righteous|Thasadith" rel="stylesheet">
+    <script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+   
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="main-menu navbar navbar-default navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+
                 </button>
-                @Html.ActionLink("BACK", "Index", "MyQuiz", new { area = "" }, new { @class = "navbar-brand" })
 
+                @Html.ActionLink("Labadi.ml", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav"></ul>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="hidden">
+
+                    </li>
+                    <li class="page-scroll">
+
+                    </li>
+                    <li class="page-scroll">
+                        @Html.ActionLink("BACK", "Index", "MyQuiz", new { area = "" }, new { @class = "" })
+                    </li>
+                    <li class="page-scroll">
+                        @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "" })
+
+                    </li>
+
+                </ul>
             </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <!-- /.navbar-collapse -->
         </div>
-    </div>
+        <!-- /.container-fluid -->
+    </nav>
 
-    <div class="container body-content">
 
-        <div class="row">
-            <div class="col-md-4">
-                <img src="~/resources/images/QuizImages/@Model.Image" />
+    <div class="container main-div-edit-quiz body-content">
+
+        <div class="row ">
+            <div class="col-md-4 col-xs-12 img-edit-quiz">
+                <img class="img img-responsive" src="~/resources/images/QuizImages/@Model.Image" />
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 col-xs-12 right-col-edit">
                 <h2>@Model.Title</h2>
-                @using (Html.BeginForm("EditDesp", "EditQuiz")) {
-                    <input type="hidden" name="ID" value="@Model.ID" />
-                    <input type="submit" value="Edit description" />
+                @using (Html.BeginForm("EditDesp", "EditQuiz"))
+                {
+                    <input type="hidden" name="ID" value="@Model.ID"/>
+                    <input class="button-format " type="submit" value="Edit description"/>
                 }
             </div>
         </div>
 
         <hr />
+        <div class="row">
+            <div class="col-md-4 col-xs-12 ">
+                <h3 style="color: rgb(45, 216, 51)" class="right-col-edit">Questions</h3>
+            </div>
 
-        <h2>Questions</h2>
-        <h3>
-            @using (Html.BeginForm("AddQuestion", "EditQuiz")) {
-                <input type="hidden" name="quizID" value="@Model.ID"/>
-                <input value="Add more question" type="submit" />
-            }
-        </h3>
-        @if (Model.QuestionList == null) {
+            <div class="col-md-6 col-xs-12 right-col-edit">
+
+                @*@using (Html.BeginForm("EditDesp", "EditQuiz"))
+                    {
+                        <h3>
+                            @using (Html.BeginForm("AddQuestion", "EditQuiz"))
+                            {
+                                <input type="hidden" name="quizID" value="@Model.ID" />
+                                <input style="color: rgb(78, 29, 122)" class="button-format" value="Add more question" type="submit" />
+                            }
+                        </h3>
+                    }*@
+                <h3>
+                    @using (Html.BeginForm("AddQuestion", "EditQuiz"))
+                    {
+                        <input type="hidden" name="quizID" value="@Model.ID" />
+                        <input style="color: rgb(78, 29, 122)" class="button-format" value="Add more question" type="submit" />
+                    }
+                </h3>
+            </div>
+        </div>
+        <hr />
+
+
+        @if (Model.QuestionList == null)
+        {
             <h2>There is not any question yet</h2>
-        } else {
+        }
+        else
+        {
 
-            foreach (var item in @Model.QuestionList) {
+            foreach (var item in @Model.QuestionList)
+            {
 
                 <div class="row">
-                    <div class="col-md-4">
+
+                    <div class="col-md-4 col-xs-12 img-edit-quiz">
                         <img src="~/resources/images/QuestionImages/@item.Image" />
                     </div>
-                    <div class="col-md-4">
-                        <span class="content">@item.Content</span>
+
+                    <div class="col-md-6 col-xs-12 question-title-edit-quiz">
+                        <div class="content">@item.Content</div>
+                        <div style="color: blueviolet">A. @item.AnsA</div>
+                        <div style="color: darkcyan">B. @item.AnsB</div>
+                        <div style="color: deeppink">C. @item.AnsC</div>
+                        <div style="color: goldenrod">D. @item.AnsD</div>
+                        <div style="color: black">=> Answer: @item.Answer</div>
                     </div>
-                    <div class="col-md-4">
-                        <span>Time: @item.Time</span><br />
-                        @using (Html.BeginForm("EditQuestion", "EditQuiz", FormMethod.Post)) {
-                            
+                    <div class="col-md-2 col-xs-12">
+                        <span class="button-format">Time: @item.Time s</span><br />
+                        @using (Html.BeginForm("EditQuestion", "EditQuiz", FormMethod.Post))
+                        {
                             <input name="queID" type="hidden" value="@item.ID" /><br />
-                            <input id="edit" type="submit" value="Edit" /><br />
+                            <input style="background-color: rgb(188, 11, 37); color: white" class="button-format" id="edit" type="submit" value="Edit" /><br />
                         }
 
-                        @using (Html.BeginForm("DeleteQuestion", "EditQuiz", FormMethod.Post)) {
-                            
+                        @using (Html.BeginForm("DeleteQuestion", "EditQuiz", FormMethod.Post, new { @id = "frm_delete_"+@item.ID }))
+                        {
+
                             <input name="queID" type="hidden" value="@item.ID" /><br />
-                            <input id="edit" type="submit" value="Delete" /><br />
+                            @*<input style="background-color: rgb(249, 80, 2); color: white" class="button-format" id="delete-button" type="button" value="Delete" />*@
+                                
+                            <button style="background-color: rgb(249, 80, 2); color: white" class="button-format"  data-formid="@item.ID" data-toggle="modal" type="button" data-target="#confirm-delete" value="">
+                                Delete
+                            </button>
+
+
                         }
-                        @using (Html.BeginForm("DuplicateQuestion", "EditQuiz", FormMethod.Post)) {                            
+                        @using (Html.BeginForm("DuplicateQuestion", "EditQuiz", FormMethod.Post))
+                        {
                             <input name="queID" type="hidden" value="@item.ID" /><br />
-                            <input id="edit" type="submit" value="Duplicate" /><br />
+                            <input style="background-color: rgb(249, 183, 1); color: white" class="button-format" id="edit" type="submit" value="Duplicate" /><br />
                         }
                     </div>
                 </div>
+                <hr />
 
             }
         }
 
 
     </div>
+   
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+            </div>
+            
+            <div class="modal-body">
+                <input id="formID" type="hidden" value="" /><br />
+               
+                <p>Do you want to delete this question ?</p>
 
+            </div>
+                
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger btn-ok " onclick="getValues()">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function getValues() {
+        var id = $('#formID').val();
+        console.log(id);
+        $("#frm_delete_" + id).submit();
+    }
+    $('#confirm-delete').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) 
+        var formID = button.data('formid') 
+      
+        var modal = $(this)
+        modal.find('#formID').val(formID);
+    })
+</script>
 </body>
 </html>

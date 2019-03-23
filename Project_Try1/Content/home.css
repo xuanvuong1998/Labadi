@@ -96,3 +96,70 @@ img {
     padding-left: 30px;
     font-size: 30px;
 }
+.create-quiz-title-page {
+    font-family: 'Righteous', cursive !important;
+    color: rgb(47, 119, 55) !important;
+    font-size: 40px;
+    margin: 30px 0 30px 0;
+}
+.row-create-quiz {
+    padding: 30px 0 30px 0;
+    background-color: white;
+    color: rgb(3, 55, 168);
+    border-radius: 10px;
+}
+
+.line-in-form {
+    margin-bottom: 30px;
+    height: 70px;
+    line-height: 70px;
+}
+
+.line-in-form > div {
+    height: 100%;
+    display: table;
+}
+
+.line-in-form input {
+    max-width: 1000px !important;
+    height: 60%;
+    width: 70%;
+    display: table-cell;
+    font-family: 'Cabin', cursive !important;
+    font-size: 25px;
+}
+
+.text-title {
+    padding-right: 30px;
+    font-family: 'Righteous', cursive !important;
+    transition: all 0.2s;
+    font-size: 28px;
+}
+
+.text-title:hover {
+    font-size: 32px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 0.5px solid #ccc;
+    border-radius: 4px;
+    display: inline-block;
+    padding: 0px 15px;
+    cursor: pointer;
+    color: black;
+    transition: all 0.3s;
+}
+.custom-file-upload:hover {
+    transform: scale(1.2);
+}
+
+#file-upload {
+    font-family: 'Cabin', cursive !important;
+}
+.custom-file-upload {
+    height: 60px !important;
+}

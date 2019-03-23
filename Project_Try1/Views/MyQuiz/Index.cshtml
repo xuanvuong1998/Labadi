@@ -15,15 +15,15 @@
     <link rel="stylesheet" href="~/resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 
     <link href="https://fonts.googleapis.com/css?family=Cabin+Condensed|Lalezar|Open+Sans+Condensed:300|Righteous|Thasadith" rel="stylesheet">
-
+    <script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")"></script>
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <style>
         body {
             /*background-color: rgb(237, 238, 239);*/
             background-color: white;
         }
-
-        
     </style>
 </head>
 <body>
@@ -55,7 +55,7 @@
                         @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "" })
 
                     </li>
-                   
+
                 </ul>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -65,7 +65,7 @@
     </nav>
 
     <div class="container">
-       
+
         <form class="form-horizontal" action="~/MyQuiz/FindByName" method="post">
             <div class="form-group">
 
@@ -99,7 +99,7 @@
                                 </a>
                             </div>
                             <div class="col-md-5">
-                                <h3 class="quiz-title-myquiz">@item.Title</h3>
+                                <h3 class="quiz-title-myquiz">@item.Title</h3>                                
                                 <p>Creator: <span>@item.Creator</span> </p>
 
 
@@ -107,15 +107,18 @@
                         </div>
                         <div class="row col-md-12 button-bar">
 
-                            <a class="btn btn-success" href="#">View Project</a>
+
                             <form method="post" action="~/EditQuiz/Index" style="display: inline-block;">
                                 <input type="hidden" name="ID" value="@item.ID" /> <br />
                                 <input class="btn btn-primary" type="submit" value="Details" />
                             </form>
-                            @using (Html.BeginForm("DeleteQuiz", "EditQuiz", FormMethod.Get, new { style = "display: inline-block;" }))
+                            @using (Html.BeginForm("DeleteQuiz", "EditQuiz", FormMethod.Get, new { @id = "frm_delete_" + @item.ID , style = "display: inline-block;" }))
                             {
                                 <input type="hidden" name="quizID" value="@item.ID" /><br />
-                                <input class="btn btn-warning" type="submit" onclick="return confirm('are you sure???')" value="Delete this quiz" />
+                                @*<input class="btn btn-warning" type="submit" onclick="return confirm('are you sure???')" value="Delete this quiz" />*@
+                                <button style="background-color: rgb(249, 80, 2); color: white" class="btn btn-warning" data-formid="@item.ID" data-toggle="modal" type="button" data-target="#confirm-delete" value="">
+                                    Delete
+                                </button>
                             }
                             @using (Html.BeginForm("Index", "PlayQuiz", FormMethod.Get, new { style = "display: inline-block;" }))
                             {
@@ -132,5 +135,45 @@
         }
 
     </div>
+
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                </div>
+
+                <div class="modal-body">
+                    <input id="formID" type="hidden" value="" /><br />
+
+                    <p>Do you want to delete this quiz ?</p>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok " onclick="getValues()">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function getValues() {
+            var id = $('#formID').val();
+            console.log(id);
+            $("#frm_delete_" + id).submit();
+        }
+        $('#confirm-delete').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var formID = button.data('formid')
+
+            var modal = $(this)
+            modal.find('#formID').val(formID);
+        })
+    </script>
 </body>
 </html>

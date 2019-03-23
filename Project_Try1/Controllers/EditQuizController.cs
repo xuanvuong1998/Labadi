@@ -1,32 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Project_Try1.Models;
 
-namespace Project_Try1.Controllers {
-    public class EditQuizController : Controller {
+namespace Project_Try1.Controllers
+{
+    public class EditQuizController : Controller
+    {
         // GET: EditQuiz
         [Authorize]
-        public ActionResult Index(FormCollection frmCl) {
+        public ActionResult Index(FormCollection frmCl)
+        {
             int id = int.Parse(frmCl["ID"]);
+
+            /*QuizBank quizes = new QuizBank();
+
+            Quiz q = quizes.FindQuizByID(id);
+            return View("QuizDetail", q);*/
 
             QuizBank quizes = new QuizBank();
 
             Quiz q = quizes.FindQuizByID(id);
-            return View("QuizDetail", q);
+            return View("EditQuiz", q);
         }
 
         [Authorize]
-        public ActionResult DeleteQuiz(string quizID) {
+        public ActionResult DeleteQuiz(string quizID)
+        {
             QuizBank bank = new QuizBank();
             bank.DeleteQuiz(int.Parse(quizID));
             return Redirect("/MyQuiz/Index");
         }
 
         [Authorize]
-        public ActionResult EditQuiz(string ID) {
+        public ActionResult EditQuiz(string ID)
+        {
 
             QuizBank quizes = new QuizBank();
 
@@ -34,35 +46,60 @@ namespace Project_Try1.Controllers {
             return View("EditQuiz", q);
         }
         [Authorize]
-        public ActionResult EditDesp(string ID) {
+        public ActionResult EditDesp(string ID)
+        {
             QuizBank quizes = new QuizBank();
 
             Quiz q = quizes.FindQuizByID(int.Parse(ID));
             return View("EditDesp", q);
         }
         [Authorize]
-        public ActionResult SaveDes(string ID, string TxtTitle, string TxtImage) {
+        public ActionResult SaveDes(HttpPostedFileBase file, string ID, string TxtTitle)
+        {
             QuizBank quizes = new QuizBank();
 
             Quiz q = quizes.FindQuizByID(int.Parse(ID));
 
             q.Title = TxtTitle;
 
-            q.Image = TxtImage;
 
+
+            if (file != null && file.ContentLength > 0)
+                try
+                {
+                    string path = Path.Combine(Server.MapPath("~/resources/images/QuizImages"),
+                        Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+
+                    // WebImage belong to WebHelper class which supports the crop, flip, watermark operation etc.
+                    WebImage img = new WebImage(file.InputStream);
+                    if (img.Width > 1200)
+                        img.Resize(1200, 600);
+                    img.Save(path);
+
+                    q.Image = file.FileName;
+
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
             quizes.UpdateDescription(q);
 
             return View("EditQuiz", q);
         }
 
-        public ActionResult AddQuestion(string quizID) {
+        public ActionResult AddQuestion(string quizID)
+        {
             ViewBag.QuizID = quizID;
 
             return View("AddQuestion");
-            
+
         }
 
-        public ActionResult AddQuestionToQuiz(FormCollection frm) {
+        public ActionResult AddQuestionToQuiz(HttpPostedFileBase file, FormCollection frm)
+        {
+
             int quizID = int.Parse(frm["quizID"]);
 
             string c1 = frm["TxtC1"];
@@ -70,9 +107,36 @@ namespace Project_Try1.Controllers {
             string c3 = frm["TxtC3"];
             string c4 = frm["TxtC4"];
             string ans = frm["TxtAns"];
-            string image = frm["TxtImage"];
+            string image = "";
 
-            Question q = new Question {
+            if (file != null && file.ContentLength > 0)
+            {
+                try
+                {
+                    string path = Path.Combine(Server.MapPath("~/resources/images/QuestionImages"),
+                        Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+
+                    // WebImage belong to WebHelper class which supports the crop, flip, watermark operation etc.
+                    WebImage img = new WebImage(file.InputStream);
+                    if (img.Width > 1200)
+                        img.Resize(1200, 600);
+                    img.Save(path);
+
+                    image = file.FileName;
+
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
+            }else if (file == null)
+            {
+                image = "default.png";
+            }
+
+            Question q = new Question
+            {
                 QuizID = quizID,
                 Content = frm["TxtContent"],
                 AnsA = c1,
@@ -87,15 +151,16 @@ namespace Project_Try1.Controllers {
             QuestionDM queDM = new QuestionDM();
 
             q.ID = queDM.GetMaxID() + 1;
-            
+
             queDM.AddQuestion(q);
-            
-            return View("EditQuiz", new QuizBank().FindQuizByID(quizID) );
-            
+
+            return View("EditQuiz", new QuizBank().FindQuizByID(quizID));
+
         }
 
         [Authorize]
-        public ActionResult EditQuestion(string queID) {
+        public ActionResult EditQuestion(string queID)
+        {
             QuestionDM queDM = new QuestionDM();
             Question que = queDM.FindQuestionByID(
                     int.Parse(queID));
@@ -105,7 +170,8 @@ namespace Project_Try1.Controllers {
         }
 
         [Authorize]
-        public ActionResult DeleteQuestion(string queID) {
+        public ActionResult DeleteQuestion(string queID)
+        {
             QuestionDM queDM = new QuestionDM();
 
             Question q = queDM.FindQuestionByID(int.Parse(queID));
@@ -117,7 +183,8 @@ namespace Project_Try1.Controllers {
         }
 
         [Authorize]
-        public ActionResult DuplicateQuestion(string queID) {
+        public ActionResult DuplicateQuestion(string queID)
+        {
             QuestionDM queDM = new QuestionDM();
             Question q = queDM.FindQuestionByID(int.Parse(queID));
             queDM.DuplicateQuestion(q);
@@ -127,22 +194,26 @@ namespace Project_Try1.Controllers {
         }
 
         [Authorize]
-        public RedirectToRouteResult SaveQuiz() {
+        public RedirectToRouteResult SaveQuiz()
+        {
             return RedirectToAction("Index", "MyQuiz");
         }
 
         [Authorize]
-        public RedirectToRouteResult CancelEdit() {
+        public RedirectToRouteResult CancelEdit()
+        {
             return RedirectToAction("Index", "MyQuiz");
         }
 
         [Authorize]
-        public RedirectToRouteResult CancelEditDes() {
+        public RedirectToRouteResult CancelEditDes()
+        {
             return RedirectToAction("Index", "MyQuiz");
         }
 
         [Authorize]
-        public ActionResult SaveQuestion(FormCollection frm) {
+        public ActionResult SaveQuestion(FormCollection frm)
+        {
             QuestionDM queDM = new QuestionDM();
             Question que = queDM.FindQuestionByID(int.Parse(frm["queID"]));
 

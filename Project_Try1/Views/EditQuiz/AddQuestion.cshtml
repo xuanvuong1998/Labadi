@@ -12,42 +12,173 @@
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/myQuiz.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/home.css" rel="stylesheet" type="text/css">
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+
+    <link rel="stylesheet" href="~/resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Cabin+Condensed|Lalezar|Open+Sans+Condensed:300|Righteous|Thasadith" rel="stylesheet">
+    <script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")"></script>
+    <script src="@Url.Content("~/resources/vendor/select2/select2.min.js")"></script>
+    <style>
+    </style>
 </head>
-<body>    
-    <div>
-        <form action="~/EditQuiz/AddQuestionToQuiz" method="post">
-            Your Question? <input type="text" name="TxtContent" /><br />
-            Time <select name="TxtTime">
-                <option value="10">10s</option>
-                <option value="20">20s</option>
-                <option value="30">30s</option>
-                <option value="60">60s</option>
-                <option value="90">90s</option>
-                <option value="120">120s</option>
-            </select><br />
+<body>
 
-            A <input type="text" name="TxtC1" /><br />
-            B <input type="text" name="TxtC2" /><br />
-            C <input type="text" name="TxtC3" /><br />
-            D <input type="text" name="TxtC4" /><br />
-            Image <input type="file" name="TxtImage" />
-            Answer
-            <select name="TxtAns">
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
-            </select><br />
+    <script type="text/javascript">
+        $(function () {
+            $("input:file").change(function () {
+                var fileName = $(this).val();
+                var tmp = fileName.split(":")[1].split("\\");
+                $(".label-file").html(tmp[tmp.length - 1]);
+            });
+        });
+    </script>
+    <script>
+        function checkRequired(idTag, idErrTag, errString) {
+            var result = true;
 
-            <input type="hidden" name="quizID" value="@ViewBag.QuizID"/>
-            <input type="submit" value="Ok! Add To Quiz" />            
-        </form>
 
-        @using (Html.BeginForm("EditQuiz", "EditQuiz")) {
-            <input type="hidden" name="ID" value="@ViewBag.QuizID"/>
-            <input type="submit" value="Cancel"/>
+            if ($('#' + idTag).val() == "") {
+                $('#' + idErrTag).html("Oops ! You haven't " + errString + '  !');
+                $('#' + idErrTag).css('color', 'red');
+                $('html, body').animate({ scrollTop: 0 });
+                result = false;
+            } else {
+                $('#' + idErrTag).html('');
+            }
+            return result;
+
         }
+
+        function submitFrm() {
+            var result = true;
+            if (!checkRequired('TxtContent', 'err-input', 'filled Title'))
+                return;
+            if (!checkRequired('TxtC1', 'err-input', 'filled Answer A'))
+                return;
+            if (!checkRequired('TxtC2', 'err-input', 'filled Answer B'))
+                return;
+            if (!checkRequired('TxtC3', 'err-input', 'filled Answer C'))
+                return;
+            if (!checkRequired('Txt4', 'err-input', 'filled Answer D'))
+                return;
+            if (!checkRequired('TxtRight', 'err-input', 'chose Right Answer'))
+                return;
+            if (!checkRequired('TxtTime', 'err-input', 'chose Time Answer'))
+                return;
+
+            /*if (!checkRequired('file-upload', 'err-input', 'chose an Image'))
+                return; */
+
+
+            if (result) {
+                $('#frm_quiz_detail').submit();
+            }
+
+
+        }
+
+
+    </script>
+    <div class="row text-center">
+        <div class="create-quiz-title-page">Add new question</div>
+        <font id="err-input"></font>
     </div>
+    <div class="container">
+        <div class="row">
+            <div class="div-form-create-question">
+                <form id="frm_quiz_detail" class="text-center" action="~/EditQuiz/AddQuestionToQuiz" method="post" enctype="multipart/form-data">
+                    <div class="row line-in-form">
+                        <div class="col-md-5 col-xs-12 text-right text-title ">Your Question? : </div>
+                        <div class="col-md-7 col-xs-12 text-left"> <input id="TxtContent" class="form-control" name="TxtContent" /></div>
+
+                    </div>
+                    <div class="row line-in-form">
+                        <div class="col-md-5 col-xs-12 text-right text-title ">A : </div>
+                        <div class="col-md-7 col-xs-12 text-left"> <input id="TxtC1" class="form-control" name="TxtC1" /></div>
+
+                    </div>
+                    <div class="row line-in-form">
+                        <div class="col-md-5 col-xs-12 text-right text-title ">B : </div>
+                        <div class="col-md-7 col-xs-12 text-left"> <input id="TxtC2" class="form-control" name="TxtC2" /></div>
+
+                    </div>
+                    <div class="row line-in-form">
+                        <div class="col-md-5 col-xs-12 text-right text-title ">C : </div>
+                        <div class="col-md-7 col-xs-12 text-left"> <input id="TxtC3" class="form-control" name="TxtC3" /></div>
+
+                    </div>
+                    <div class="row line-in-form">
+                        <div class="col-md-5 col-xs-12 text-right text-title ">D : </div>
+                        <div class="col-md-7 col-xs-12 text-left"> <input id="TxtC4" class="form-control" name="TxtC4" /></div>
+
+                    </div>
+
+                    <div class="row line-in-form">
+                        <div class="col-md-5 col-xs-12 text-right text-title">Question image : </div>
+                        <div class="col-md-7 col-xs-12 text-left form-group">
+                            <label for="file-upload" class="custom-file-upload">
+                                <i style="font-size: 30px" class="fa fa-file-image-o" aria-hidden="true"></i>
+
+                            </label>
+                            <input id="file-upload" type="file" name="file" />
+                            <span style="padding-left: 20px" class="label-file"></span>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row text-center">
+                        <div class="col-md-2 col-xs-1"></div>
+                        <div class="col-md-4 col-xs-12">
+                            <select id="TxtRight" style="background-color: coral" class="select-right-answers" name="TxtAns">
+                                <option value="">Select right answer !</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <select id="TxtTime" class="select-right-answers" style="background-color: yellow" name="TxtTime">
+                                <option value="">Choose time !</option>
+                                <option value="10">10s</option>
+                                <option value="20">20s</option>
+                                <option value="30">30s</option>
+                                <option value="60">60s</option>
+                                <option value="90">90s</option>
+                                <option value="120">120s</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row text-center">
+                        <input type="hidden" name="quizID" value="@ViewBag.QuizID" />
+
+                        <input style="background-color: cornflowerblue" class="select-right-answers" type="button" onclick="submitFrm();" value="Ok! Add To Quiz" />
+
+
+                    </div>
+
+                </form>
+                @using (Html.BeginForm("EditQuiz", "EditQuiz"))
+                {<div class="row text-center">
+                        <input type="hidden" name="ID" value="@ViewBag.QuizID" />
+                        <input class="select-right-answers" type="submit" value="Cancel" />
+                    </div>
+                }
+
+
+
+
+            </div>
+        </div>
+
+
 </body>
 </html>
