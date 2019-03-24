@@ -212,7 +212,7 @@ namespace Project_Try1.Controllers
         }
 
         [Authorize]
-        public ActionResult SaveQuestion(FormCollection frm)
+        public ActionResult SaveQuestion(HttpPostedFileBase file,FormCollection frm)
         {
             QuestionDM queDM = new QuestionDM();
             Question que = queDM.FindQuestionByID(int.Parse(frm["queID"]));
@@ -220,12 +220,37 @@ namespace Project_Try1.Controllers
             que.Answer = frm["TxtAns"];
             que.Content = frm["TxtContent"];
             que.Time = int.Parse(frm["TxtTime"]);
-            que.Image = frm["TxtImage"];
             que.AnsA = frm["TxtC1"];
             que.AnsB = frm["TxtC2"];
             que.AnsC = frm["TxtC3"];
             que.AnsD = frm["TxtC4"];
 
+            if (file != null && file.ContentLength > 0)
+            {
+                try
+                {
+                    string path = Path.Combine(Server.MapPath("~/resources/images/QuestionImages"),
+                        Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+
+                    // WebImage belong to WebHelper class which supports the crop, flip, watermark operation etc.
+                    WebImage img = new WebImage(file.InputStream);
+                    if (img.Width > 1200)
+                        img.Resize(1200, 600);
+                    img.Save(path);
+
+                    que.Image = file.FileName;
+
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
+            }
+            else if (file == null)
+            {
+                que.Image = "default.png";
+            }
             queDM.UpdateQuestion(que);
 
             Quiz q = new QuizBank().FindQuizByID(que.QuizID);

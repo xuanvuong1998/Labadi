@@ -88,16 +88,7 @@
 
             <div class="col-md-6 col-xs-12 right-col-edit">
 
-                @*@using (Html.BeginForm("EditDesp", "EditQuiz"))
-                    {
-                        <h3>
-                            @using (Html.BeginForm("AddQuestion", "EditQuiz"))
-                            {
-                                <input type="hidden" name="quizID" value="@Model.ID" />
-                                <input style="color: rgb(78, 29, 122)" class="button-format" value="Add more question" type="submit" />
-                            }
-                        </h3>
-                    }*@
+
                 <h3>
                     @using (Html.BeginForm("AddQuestion", "EditQuiz"))
                     {

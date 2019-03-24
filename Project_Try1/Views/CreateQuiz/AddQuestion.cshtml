@@ -12,16 +12,25 @@
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/home.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/editQuiz.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/Content/myQuiz.css" rel="stylesheet" type="text/css">
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
     <link rel="stylesheet" href="~/resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 
     <link href="https://fonts.googleapis.com/css?family=Cabin+Condensed|Lalezar|Open+Sans+Condensed:300|Righteous|Thasadith" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
+
+    <script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
     <style>
         .imgContainer {
             max-height: 300px;
             overflow: hidden;
         }
+
         .butt-add-question {
             padding: 0 5px;
             width: 200px;
@@ -36,21 +45,22 @@
             margin-left: 20%;
             font-weight: bolder;
         }
+
             .butt-add-question:hover {
-              
                 line-height: 50px;
                 transform: scale(1.3);
                 font-size: 32px;
                 font-weight: bolder;
             }
-       .a-add-question:hover {
-           text-decoration: none;
-           color: white;
+
+        .a-add-question:hover {
+            text-decoration: none;
+            color: white;
         }
+
         .img-quiz {
             border-radius: 10px;
             box-shadow: gainsboro 5px 2px;
-
         }
     </style>
 </head>
@@ -115,7 +125,7 @@
         </div>
     </div>
 
-
+<div class="col-md-12" style="height: 50px;"></div>
 
     <div class="container">
 
@@ -126,12 +136,53 @@
                 foreach (var item in (List<Project_Try1.Models.Question>)Session["QuestionList"])
                 {
                     count++;
-                    <div class="queInQuiz">
+                    @*<div class="queInQuiz">
                         <span>Question @count : @item.Content</span><br />
+                    </div>*@
+                    <div class="row">
+
+                        <div class="col-md-4 col-xs-12 img-edit-quiz">
+                            <img src="~/resources/images/QuestionImages/@item.Image" />
+                        </div>
+
+                        <div class="col-md-6 col-xs-12 question-title-edit-quiz">
+                            <div class="content">@item.Content</div>
+                            <div style="color: blueviolet">A. @item.AnsA</div>
+                            <div style="color: darkcyan">B. @item.AnsB</div>
+                            <div style="color: deeppink">C. @item.AnsC</div>
+                            <div style="color: goldenrod">D. @item.AnsD</div>
+                            <div style="color: black">=> Answer: @item.Answer</div>
+                        </div>
+                        <div class="col-md-2 col-xs-12">
+                            <span class="button-format">Time: @item.Time s</span><br />
+                            
+
+                            @using (Html.BeginForm("DeleteQuestion", "CreateQuiz", FormMethod.Post, new { @id = "frm_delete_" + @item.ID }))
+                            {
+
+                                <input name="queID" type="hidden" value="@item.ID" /><br />
+                                @*<input style="background-color: rgb(249, 80, 2); color: white" class="button-format" id="delete-button" type="button" value="Delete" />*@
+
+                                <button style="background-color: rgb(249, 80, 2); color: white" class="button-format" data-formid="@item.ID" data-toggle="modal" type="submit" data-target="#confirm-delete" value="">
+                                    Delete
+                                </button>
+
+
+                            }
+                            @using (Html.BeginForm("DuplicateQuestion", "CreateQuiz", FormMethod.Post))
+                            {
+                                <input name="queID" type="hidden" value="@item.ID" /><br />
+                                <input style="background-color: rgb(249, 183, 1); color: white" class="button-format" id="edit" type="submit" value="Duplicate" /><br />
+                            }
+                        </div>
                     </div>
+                    <hr />
                 }
             }
         }
+
+
+       
 
     </div>
 

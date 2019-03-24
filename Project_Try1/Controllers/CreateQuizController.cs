@@ -65,7 +65,30 @@ namespace Project_Try1.Controllers {
         public ActionResult QuestionDetails() {
             return View("QuestionDetails");
         }
-  
+        public ActionResult DeleteQuestion(string queID)
+        {
+            QuestionDM queDM = new QuestionDM();  
+
+            var tmp = Session["QuestionList"];
+
+            List<Question> list;
+            if (tmp == null)
+            {
+                list = new List<Question>();
+            }
+            else
+            {
+                list = tmp as List<Question>;
+            }
+
+            int a = int.Parse(queID);
+           Question q = list.SingleOrDefault(x => x.ID == int.Parse(queID)) ;
+           list.Remove(q);
+           
+            return View("AddQuestion");
+
+        }
+
         [Authorize]
         public ActionResult AddQuestionToQuiz(HttpPostedFileBase file, FormCollection frm) {
 
