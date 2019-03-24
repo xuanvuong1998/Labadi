@@ -14,52 +14,142 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/home.css" rel="stylesheet" type="text/css">
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <link rel="stylesheet" href="~/resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Cabin+Condensed|Lalezar|Open+Sans+Condensed:300|Righteous|Thasadith" rel="stylesheet">
+
+    <style>
+        #err-input {
+            font-size: 25px;
+            font-family: 'Righteous';
+            margin: 20px;
+        }
+    </style>
 </head>
 <body>
+<script src="~/resources/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script src="~/resources/vendor/tilt/tilt.jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("input:file").change(function () {
+                var fileName = $(this).val();
+                $(".label-file").html(fileName);
+            });
+        });
+    </script>
+<script>
+    function checkRequired(idTag,idErrTag,errString) {
+        var result = true;
+
+        if ($('#'+idTag).val() == "") {
+            $('#' +idErrTag).html("Oops ! You haven't " +  errString +'  !');
+            $('#' + idErrTag).css('color', 'red');
+            $('html, body').animate({scrollTop: 0});
+            result = false;
+        } else {
+            $('#' +idErrTag).html('');
+        }
+        return result;
+
+    }
+    function submitFrm() {
+        var result = true;
+        if (!checkRequired('TxtTitleQuiz', 'err-input', 'Title')) 
+            return; 
+        if (!checkRequired('TxtDescQuiz', 'err-input', 'filled Description of this quiz'))
+            return;            
+       
+           
+        /*if (!checkRequired('file-upload', 'err-input', 'chose an Image'))
+            return; */
+
+                    
+        if (result) {
+            $('#form-create-quiz').submit();
+        }
+       
+
+    }
 
 
-<nav class="main-menu navbar navbar-default navbar-fixed-top">
+
+</script>
+    <nav class="main-menu navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+
+                </button>
+
+                @Html.ActionLink("Labadi.ml", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="hidden">
+
+                    </li>
+                    <li class="page-scroll">
+
+                    </li>
+                    <li class="page-scroll">
+                        @Html.ActionLink("Cancel", "CancelCreatingQuiz", "CreateQuiz", new { area = "" }, new { @class = "" })
+                    </li>
+                    <li class="page-scroll">
+                        @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "" })
+
+                    </li>
+
+                </ul>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
     <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-
-            </button>
-
-            @Html.ActionLink("Labadi.ml", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <div class="row text-center">
+            <div class="create-quiz-title-page">Create New Quiz</div>
+            <font id="err-input"></font>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
+        <div class="row text-center row-create-quiz">
+            <form id="form-create-quiz" style="font-family: 'Righteous'; " action="~/CreateQuiz/PostImage" method="post" enctype="multipart/form-data">
+                <div class="row line-in-form">
+                    <div class="col-md-5 col-xs-12 text-right text-title ">Title : </div>
+                    <div class="col-md-7 col-xs-12 text-left"> <input id="TxtTitleQuiz"  class="form-control" name="TxtTitle" /></div>
 
-                <li class="hidden">
+                </div>
+                <div class="row line-in-form">
+                    <div class="col-md-5 col-xs-12 text-right text-title">Description : </div>
+                    <div class="col-md-7 col-xs-12 text-left"> <input id="TxtDescQuiz" class="form-control" name="TxtDesc" /></div>
 
-                </li>
-                <li class="page-scroll">
+                </div>
+                <div class="row line-in-form">
+                    <div class="col-md-5 col-xs-12 text-right text-title">Cover image : </div>
+                    <div class="col-md-7 col-xs-12 text-left form-group">
+                        <label for="file-upload" class="custom-file-upload">
+                            <i style="font-size: 30px" class="fa fa-file-image-o" aria-hidden="true"></i>
 
-                </li>
-                <li class="page-scroll">
-                    @Html.ActionLink("Cancel", "CancelCreatingQuiz", "CreateQuiz", new {area = ""}, new {@class = ""})
-                </li>
-                <li class="page-scroll">
-                    @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "" })
+                        </label>
+                        <input id="file-upload"  type="file" name="file" value="default.png" />
+                        <span style="padding-left: 20px" class="label-file"></span>
+                    </div>
 
-                </li>
-                   
-            </ul>
+                </div>
+
+
+
+                <input class="btn-success" type="button" onclick="submitFrm();" value="OK, GO!!!" />
+                <label>@ViewBag.Message</label>
+            </form>
+
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- /.navbar-collapse -->
     </div>
-    <!-- /.container-fluid -->
-</nav>
-<h2>CREATE NEW QUIZ</h2>
-<form action="~/CreateQuiz/PostImage" method="post" enctype="multipart/form-data">
-    Title: <input name="TxtTitle"/><br/>
-    Image: <input type="file" name="file"/><br/>
-    <input type="submit" value="OK, GO!!!"/>
-    <label>@ViewBag.Message</label>
-</form>
+
+
 
 </body>
 </html>

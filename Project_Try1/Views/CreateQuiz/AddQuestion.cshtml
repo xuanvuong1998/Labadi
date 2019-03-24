@@ -11,38 +11,124 @@
     <title>CreateNewQuiz</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    
-    <link href="~/Content/questionOfAQuiz.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/home.css" rel="stylesheet" type="text/css">
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <link rel="stylesheet" href="~/resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Cabin+Condensed|Lalezar|Open+Sans+Condensed:300|Righteous|Thasadith" rel="stylesheet">
+
+    <style>
+        .imgContainer {
+            max-height: 300px;
+            overflow: hidden;
+        }
+        .butt-add-question {
+            padding: 0 5px;
+            width: 200px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            background-color: coral;
+            border-radius: 5px;
+            color: white !important;
+            transition: all 0.3s;
+            margin-top: 50px;
+            margin-left: 20%;
+            font-weight: bolder;
+        }
+            .butt-add-question:hover {
+              
+                line-height: 50px;
+                transform: scale(1.3);
+                font-size: 32px;
+                font-weight: bolder;
+            }
+       .a-add-question:hover {
+           text-decoration: none;
+           color: white;
+        }
+        .img-quiz {
+            border-radius: 10px;
+            box-shadow: gainsboro 5px 2px;
+
+        }
+    </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+
+
+
+    <nav class="main-menu navbar navbar-default navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                @Html.ActionLink("OK. Save!", "SaveQuiz", "CreateQuiz", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Cancel", "CancelCreatingQuiz", "CreateQuiz", new { area = "" }, new { @class = "navbar-brand" })
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+
+                </button>
+
+                @Html.ActionLink("Labadi.ml", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav"></ul>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="hidden">
+
+                    </li>
+                    <li class="page-scroll">
+
+                    </li>
+                    <li class="page-scroll">
+                        @Html.ActionLink("OK. Save!", "SaveQuiz", "CreateQuiz", new { area = "" }, new { @class = "" })
+                    </li>
+                    <li class="page-scroll">
+                        @Html.ActionLink("Cancel", "CancelCreatingQuiz", "CreateQuiz", new { area = "" }, new { @class = "" })
+
+                    </li>
+
+                </ul>
             </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+
+
+    <div class="row text-center">
+        <div class="create-quiz-title-page">Title: @Session["Title"]</div>
+    </div>
+
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-6">
+                <img class="img-responsive img-quiz" src="~/resources/images/QuizImages/@Session["Image"]" />
+            </div>
+            <div class="col-md-6 ">
+                <div class="butt-add-question">
+                    <a class="a-add-question" href="@Url.Action("QuestionDetails", "CreateQuiz")" >Add Question</a>
+                </div>
+               
+            </div>
+
         </div>
     </div>
 
-    Title: @Session["Title"] <br />
-    
-    <div id="imgContainer">
-       <img src="~/resources/images/QuizImages/@Session["Image"]" />
-    </div>
+
+
     <div class="container">
 
         @{
-            if (Session["QuestionList"] != null) {
+            if (Session["QuestionList"] != null)
+            {
                 var count = 0;
-                foreach (var item in (List<Project_Try1.Models.Question>)Session["QuestionList"]) {
+                foreach (var item in (List<Project_Try1.Models.Question>)Session["QuestionList"])
+                {
                     count++;
                     <div class="queInQuiz">
-                        <span>Question @count : @item.Content</span><br/>                                                                      
-                    </div>                    
+                        <span>Question @count : @item.Content</span><br />
+                    </div>
                 }
             }
         }
@@ -50,9 +136,7 @@
     </div>
 
 
-    <a href="@Url.Action("QuestionDetails", "CreateQuiz")" class="elements">
-        <span>Add Question</span>
-    </a>
+
 
 
 </body>

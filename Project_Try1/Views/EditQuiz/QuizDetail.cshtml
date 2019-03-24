@@ -6,21 +6,31 @@
     ViewBag.Title = "View";
 }
 
-<div id="left">
-    <div id="img">
-        <img src="~/resources/images/QuizImages/@Model.Image" />
-    </div>
-    <div id="info">
-        <span>Title: @Model.Title</span><br />
-        <a>PLAY</a><br />
-        <span>Creator: @Model.Creator</span><br />
-        <span>Plays: </span><br />
-        @using (Html.BeginForm("EditQuiz", "EditQuiz")) {
-            <input type="hidden" name="ID" value="@Model.ID" />
-            <input type="submit" value="EDIT" />
-        }
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 overview-quiz ">
+
+            <div class="col-md-6">
+                <img src="~/resources/images/QuizImages/@Model.Image" />
+            </div>
+            <div id="info" class="col-md-6">
+                <span>Title: @Model.Title</span><br />
+                
+                <span>Creator: @Model.Creator</span><br />
+                
+                @using (Html.BeginForm("EditQuiz", "EditQuiz"))
+                {
+                    <input type="hidden" name="ID" value="@Model.ID" />
+                    <input type="submit" value="EDIT" />
+                }
+            </div>
+            
+        </div>
+
+
     </div>
 </div>
+
 
 <div id="right">
     <h3>Questions</h3>

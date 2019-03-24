@@ -123,7 +123,6 @@
     <Content Include="Content\editQuiz.css" />
     <Content Include="Content\main.css" />
     <Content Include="Content\myQuiz.css" />
-    <Content Include="Content\questionOfAQuiz.css" />
     <Content Include="Content\quizDetails.css" />
     <Content Include="Content\register.css" />
     <Content Include="Content\Site.css" />

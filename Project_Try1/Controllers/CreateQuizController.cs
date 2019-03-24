@@ -20,8 +20,16 @@ namespace Project_Try1.Controllers {
 
         [HttpPost]
         public ActionResult PostImage(HttpPostedFileBase file, FormCollection frm)
+
         {
             string title = frm["TxtTitle"];
+            if (file == null)
+            {
+                Session["Title"] = title;
+                Session["Image"] = "default.png";                
+                return View("AddQuestion");
+            }
+            
             if (file != null && file.ContentLength > 0)
                 try
                 {
@@ -59,19 +67,60 @@ namespace Project_Try1.Controllers {
         }
   
         [Authorize]
-        public ActionResult AddQuestionToQuiz(FormCollection frm) {
-            dynamic list = Session["QuestionList"];
+        public ActionResult AddQuestionToQuiz(HttpPostedFileBase file, FormCollection frm) {
 
-            if (list == null) {
+            if (Session["Image"] == null)
+            {
+                return View("CreateNewQuiz");
+            }
+            var tmp = Session["QuestionList"];
+
+            List<Question> list;
+            if (tmp == null) {
                 list = new List<Question>();
             }
+            else
+            {
+                list = tmp as List<Question>;
+            }
 
+            bool isPostBck = list.SingleOrDefault(x => x.Content.Equals(frm["TxtContent"])) != null;
+
+            if (isPostBck)
+            {
+                return View("AddQuestion");
+            }
             string c1 = frm["TxtC1"];
             string c2 = frm["TxtC2"];
             string c3 = frm["TxtC3"];
             string c4 = frm["TxtC4"];
             string ans = frm["TxtAns"];
-            string image = frm["TxtImage"];
+            string image = "";
+            string content = frm["TxtContent"];
+
+            if (file != null && file.ContentLength > 0)
+                try
+                {
+                    string path = Path.Combine(Server.MapPath("~/resources/images/QuestionImages"),
+                        Path.GetFileName(file.FileName));
+                    file.SaveAs(path); 
+
+                    // WebImage belong to WebHelper class which supports the crop, flip, watermark operation etc.
+                    WebImage img = new WebImage(file.InputStream);
+                    if (img.Width > 1200)
+                        img.Resize(1200, 600);
+                    img.Save(path);
+                    
+                    image = file.FileName;
+
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                }
+           
+
+            // Question tmp = list.SingleOrDefault(qs => qs.Content == content);
 
             Question q = new Question {
                 Content = frm["TxtContent"],
