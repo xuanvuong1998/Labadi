@@ -31,7 +31,7 @@ namespace Project_Try1.Controllers
                 return RedirectToAction("Home", "Home");
             } else
             {
-                TempData["error"] = "Username or password was wrong! Try again! ";
+                TempData["error"] = "Username or password was wrong!  ";
                 //return RedirectToAction("Index", "Login");
                 return RedirectToAction("Index", "Login");
             }          

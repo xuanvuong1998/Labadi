@@ -47,7 +47,7 @@ body {
 }
 
 .thumbnail {
-    height:350px !important;
+    height:400px !important;
     transition: all 0.3s;
     padding: 0;
     box-shadow: 4px 5px rgb(239, 240, 242);
@@ -66,10 +66,10 @@ body {
 }
 
 .quiz-title {    
-    height: 12%;
+    height: 15%;
     font-family: 'Open Sans Condensed', sans-serif;
     font-weight: bolder;
-    color: blueviolet;
+    color: darkslateblue;
     font-size: 26px;
     
 }

@@ -5,7 +5,9 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>CreateNewQuiz</title>
+<title>Edit Quiz</title>
+<link rel="icon" type="image/png" href="@Url.Content("~/resources/images/icons/favicon.ico")" />
+
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/home.css" rel="stylesheet" type="text/css">
@@ -35,6 +37,10 @@
                     $('#' + idErrTag).html("Oops ! You haven't " + errString + '  !');
                     $('#' + idErrTag).css('color', 'red');
                     $('html, body').animate({ scrollTop: 0 });
+                    result = false;
+                }else if ($('#' + idTag).val().length > 50) {
+                    $('#' + idErrTag).html( 'This title was too long !');
+                    $('#' + idErrTag).css('color', 'red');
                     result = false;
                 } else {
                     $('#' + idErrTag).html('');
@@ -73,7 +79,7 @@
 
                         </li>
                         <li class="page-scroll">
-
+              
                         </li>
                         <li class="page-scroll">
                             @Html.ActionLink("Cancel", "CancelEditDes", "EditQuiz",
