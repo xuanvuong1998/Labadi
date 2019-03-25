@@ -12,13 +12,11 @@ namespace Project_Try1.Models {
         public string FullName { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-
     }
 
     public class AccountData {
 
         public static List<Account> AccountList = new List<Account>();
-
 
        
         public bool CheckLoginAccount(string username, string password) {

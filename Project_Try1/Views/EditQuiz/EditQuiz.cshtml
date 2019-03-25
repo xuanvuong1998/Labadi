@@ -123,7 +123,7 @@
                         <div style="color: darkcyan">B. @item.AnsB</div>
                         <div style="color: deeppink">C. @item.AnsC</div>
                         <div style="color: goldenrod">D. @item.AnsD</div>
-                        <div style="color: black">=> Answer: @item.Answer</div>
+                        <div style="color: black">=> Answer: @item.Answer</div>                        
                     </div>
                     <div class="col-md-2 col-xs-12">
                         <span class="button-format">Time: @item.Time s</span><br />
@@ -136,6 +136,7 @@
                         @using (Html.BeginForm("DeleteQuestion", "EditQuiz", FormMethod.Post, new { @id = "frm_delete_"+@item.ID }))
                         {
 
+                            <input name="quizID" type="hidden" value="@Model.ID"/>
                             <input name="queID" type="hidden" value="@item.ID" /><br />
                             @*<input style="background-color: rgb(249, 80, 2); color: white" class="button-format" id="delete-button" type="button" value="Delete" />*@
                                 

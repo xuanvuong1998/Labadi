@@ -16,23 +16,28 @@ namespace Project_Try1.Controllers
         public ActionResult Index(FormCollection frmCl)
         {
             int id = int.Parse(frmCl["ID"]);
-
-            /*QuizBank quizes = new QuizBank();
-
-            Quiz q = quizes.FindQuizByID(id);
-            return View("QuizDetail", q);*/
-
+          
             QuizBank quizes = new QuizBank();
 
             Quiz q = quizes.FindQuizByID(id);
             return View("EditQuiz", q);
         }
 
+        public ActionResult Index2(string quizID) {
+            int id = int.Parse(quizID);
+            
+            QuizBank quizes = new QuizBank();
+
+            Quiz q = quizes.FindQuizByID(id);
+            return View("EditQuiz", q);
+        }
+
+        
         [Authorize]
         public ActionResult DeleteQuiz(string quizID)
         {
             QuizBank bank = new QuizBank();
-            bank.DeleteQuiz(int.Parse(quizID));
+            bank.DeleteQuiz(int.Parse(quizID));            
             return Redirect("/MyQuiz/Index");
         }
 
@@ -54,14 +59,14 @@ namespace Project_Try1.Controllers
             return View("EditDesp", q);
         }
         [Authorize]
-        public ActionResult SaveDes(HttpPostedFileBase file, string ID, string TxtTitle)
+        public ActionResult SaveDes(HttpPostedFileBase file, string ID, string TxtTitle, string TxtDescQuiz)
         {
             QuizBank quizes = new QuizBank();
 
             Quiz q = quizes.FindQuizByID(int.Parse(ID));
 
             q.Title = TxtTitle;
-
+            q.Desp = TxtDescQuiz;
 
 
             if (file != null && file.ContentLength > 0)
@@ -97,9 +102,13 @@ namespace Project_Try1.Controllers
 
         }
 
+
+        [Authorize]
         public ActionResult AddQuestionToQuiz(HttpPostedFileBase file, FormCollection frm)
         {
 
+            QuestionDM queDM = new QuestionDM();
+            
             int quizID = int.Parse(frm["quizID"]);
 
             string c1 = frm["TxtC1"];
@@ -108,13 +117,13 @@ namespace Project_Try1.Controllers
             string c4 = frm["TxtC4"];
             string ans = frm["TxtAns"];
             string image = "";
-
+            
             if (file != null && file.ContentLength > 0)
             {
                 try
-                {
+                {                    
                     string path = Path.Combine(Server.MapPath("~/resources/images/QuestionImages"),
-                        Path.GetFileName(file.FileName));
+                        Path.GetFileName(file.FileName));                    
                     file.SaveAs(path);
 
                     // WebImage belong to WebHelper class which supports the crop, flip, watermark operation etc.
@@ -148,7 +157,7 @@ namespace Project_Try1.Controllers
                 Image = image
             };
 
-            QuestionDM queDM = new QuestionDM();
+            
 
             q.ID = queDM.GetMaxID() + 1;
 
@@ -169,16 +178,20 @@ namespace Project_Try1.Controllers
 
         }
 
-        [Authorize]
-        public ActionResult DeleteQuestion(string queID)
+        [Authorize]        
+        public ActionResult DeleteQuestion(string queID, string quizID)
         {
             QuestionDM queDM = new QuestionDM();
-
+                        
             Question q = queDM.FindQuestionByID(int.Parse(queID));
-            queDM.DeleteQuestion(int.Parse(queID));
 
-            ViewBag.QuizID = q.QuizID;
-            return View("EditQuiz", new QuizBank().FindQuizByID(q.QuizID));
+            if (q != null) {
+                queDM.DeleteQuestion(int.Parse(queID));
+            }
+                                               
+            //return RedirectToAction("Index2", new { quizID = q.QuizID });
+            //return Redirect("/EditQuiz/Index2?quizID=" + q.QuizID);
+            return View("EditQuiz", new QuizBank().FindQuizByID(int.Parse(quizID)));
 
         }
 

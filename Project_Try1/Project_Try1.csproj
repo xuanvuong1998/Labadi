@@ -328,7 +328,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="resources\images\QuestionImages\" />
     <Folder Include="resources\images\QuizImages\" />
-    <Folder Include="Views\CreateNewQuiz\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

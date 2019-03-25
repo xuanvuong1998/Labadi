@@ -24,7 +24,7 @@ namespace Project_Try1.Controllers
             return View();
         }
 
-        
+        [Authorize]
         public ActionResult FindByName(string TxtSearch) {
             QuizBank bank = new QuizBank();
             List<Quiz> list = bank.FindQuizzesByName(TxtSearch);

@@ -17,7 +17,6 @@ namespace Project_Try1.Controllers
             ViewBag.Message = TempData["error"];
             return View();
         }
-
       
 
         AccountData ac = new AccountData();

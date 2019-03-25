@@ -103,25 +103,26 @@
                 <input type="hidden" name="ID" value="@Model.ID" />
                 <div class="row line-in-form">
                     <div class="col-md-5 col-xs-12 text-right text-title ">Title : </div>
-                    <div class="col-md-7 col-xs-12 text-left"> <input id="TxtTitleQuiz" class="form-control" name="TxtTitle" value="@Model.ID" /></div>
+                    <div class="col-md-7 col-xs-12 text-left"> <input id="TxtTitleQuiz" class="form-control" name="TxtTitle" value="@Model.Title" /></div>
                 </div>
-                
-                
+                <div class="row line-in-form">
+                    <div class="col-md-5 col-xs-12 text-right text-title ">Description : </div>
+                    <div class="col-md-7 col-xs-12 text-left"> <input id="TxtDescQuiz" class="form-control" name="TxtDescQuiz" value="@Model.Desp" /></div>
+                </div>
+
                 <div class="row line-in-form">
                     <div class="col-md-5 col-xs-12 text-right text-title">Cover image : </div>
                     <div class="col-md-7 col-xs-12 text-left form-group">
                         <label for="file-upload" class="custom-file-upload">
                             <i style="font-size: 30px" class="fa fa-file-image-o" aria-hidden="true"></i>
-
                         </label>
                         <input id="file-upload" type="file" name="file" value="default.png" />
                         <span style="padding-left: 20px" class="label-file"></span>
                     </div>
 
                 </div>
-               
-               
-               
+
+
                 <input class="btn-success" type="button" onclick="submitFrm();" value="SAVE!" />
             </form>
         </div>

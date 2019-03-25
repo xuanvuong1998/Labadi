@@ -1,26 +1,26 @@
-﻿.quiz{
+﻿.quiz {
     border: 1px solid black;
     width: 100%;
     height: 200px;
     margin-right: 10px;
 }
 
-.quiz div{
-    float:left;
-    width: 30%;
-    height: 100%;  
-}
+    .quiz div {
+        float: left;
+        width: 30%;
+        height: 100%;
+    }
 
-.imgContainer{
+.imgContainer {
     font-size: 16px;
 }
 
 .creator {
-    font-style:italic;
-    font-weight:bold;
+    font-style: italic;
+    font-weight: bold;
 }
 
-#search form{
+#search form {
     padding-left: 35%;
     padding-bottom: 10%;
     padding-top: 5%;
@@ -28,34 +28,35 @@
 }
 
 
-.title{
+.title {
     color: crimson;
-    font-size: 24px;    
+    font-size: 24px;
 }
 
 
-.control{
+.control {
     text-align: right;
 }
-img{
+
+img {
     width: 100%;
     height: 100%;
 }
+
 .navbar-default {
     background-color: rgb(3, 55, 168);
 }
-.main-menu *{
-         
+
+.main-menu * {
     font-family: 'Righteous', cursive !important;
-
     color: white !important;
-
 }
 
 .navbar-brand {
     padding-left: 30px;
     font-size: 30px !important;
 }
+
 .search-bar {
     height: 50px;
     margin: 50px 0 50px 0;
@@ -68,6 +69,11 @@ img{
     color: darkslategrey;
 }
 
+.navBtn{
+    font-size: 23px;
+}
+
+
 .quiz-in-my-quiz {
     padding: 20px;
     border-radius: 5px;
@@ -77,6 +83,12 @@ img{
     background-color: white;
     box-shadow: 4px 5px rgb(239, 240, 242);
 }
+
+.quiz-in-my-quiz:hover {
+        transform: scale(1.05);
+        background-color: rgb(224, 221, 219);
+        z-index: 2;
+    }
 
 .form-horizontal {
     padding-top: 30px;
@@ -107,11 +119,12 @@ img{
     text-align: center
 }
 
-.butt > i {
-    font-size: 45px;
-    width: 100%;
-    height: 100%;
-}
+    .butt > i {
+        font-size: 45px;
+        width: 100%;
+        height: 100%;
+    }
+
 .div-form-create-question {
     margin-top: 30px;
     padding: 50px 0;
@@ -134,14 +147,14 @@ img{
     text-align: center;
 }
 
-.select-right-answers * {
-    font-size: 25px;
-    font-family: 'Righteous';
-}
+    .select-right-answers * {
+        font-size: 25px;
+        font-family: 'Righteous';
+    }
 
-.select-right-answers:hover {
-    transform: scale(1.2);
-}
+    .select-right-answers:hover {
+        transform: scale(1.2);
+    }
 
 #err-input {
     font-size: 25px;

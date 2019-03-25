@@ -49,10 +49,10 @@
 
                     </li>
                     <li class="page-scroll">
-                        @Html.ActionLink("Create Quiz", "index", "CreateQuiz", new { area = "" }, new { @class = "" })
+                        @Html.ActionLink("Create Quiz", "index", "CreateQuiz", new { area = "" }, new { @class = "navBtn" })
                     </li>
                     <li class="page-scroll">
-                        @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "" })
+                        @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "navBtn" })
 
                     </li>
 
@@ -99,8 +99,9 @@
                                 </a>
                             </div>
                             <div class="col-md-5">
-                                <h3 class="quiz-title-myquiz">@item.Title</h3>                                
-                                <p>Creator: <span>@item.Creator</span> </p>
+                                <h2 class="quiz-title-myquiz">@item.Title</h2>    
+                                <h5>#@item.Desp</h5>
+                                <p>Creator: <span><font color="gray">@item.Creator</font></span> </p>
 
 
                             </div>

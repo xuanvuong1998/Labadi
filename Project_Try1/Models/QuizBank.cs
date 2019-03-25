@@ -11,11 +11,11 @@ namespace Project_Try1.Models {
         public string Title { get; set; }
         public string Image { get; set; }
         public string Creator { get; set; }
+        public string Desp { get; set; }
+        public int Plays { get; set; }
 
 
         public List<Question> QuestionList { get; set; }
-
-
 
     }
 
@@ -25,11 +25,11 @@ namespace Project_Try1.Models {
             List<Quiz> list = null;
             try {
                 using (var con = DBUtils.GetConnection()) {
-                    string sql = "SELECT * FROM Quiz";
+                    string sql = "SELECT TOP (@xxx) * FROM Quiz";
 
                     con.Open();
                     using (var cmd = new SqlCommand(sql, con)) {
-                        //cmd.Parameters.AddWithValue("@top", top);
+                        cmd.Parameters.AddWithValue("@xxx",  top );
 
                         using (var reader = cmd.ExecuteReader()) {
 
@@ -46,6 +46,10 @@ namespace Project_Try1.Models {
                                         Title = (string)reader["title"],
                                         Image = reader["image"] == DBNull.Value
                                             ? "default.png" : (string)reader["image"],
+                                        Desp = reader["description"] == DBNull.Value
+                                            ? "No Caterogy" : (string)reader["description"],
+                                        Plays = reader["plays"] == DBNull.Value
+                                            ? 0 : (int)reader["plays"],
                                         QuestionList = questionDM.FindQuestionByQuizID(quizID)
                                     };
 
@@ -90,6 +94,10 @@ namespace Project_Try1.Models {
                                         Title = (string)reader["title"],
                                         Image = reader["image"] == DBNull.Value
                                             ? "default.png" : (string)reader["image"],
+                                        Desp = reader["description"] == DBNull.Value
+                                            ? "No Caterogy" : (string)reader["description"],
+                                        Plays = reader["plays"] == DBNull.Value
+                                            ? 0 : (int)reader["plays"],
                                         QuestionList = questionDM.FindQuestionByQuizID(quizID)
                                     };
 
@@ -154,6 +162,10 @@ namespace Project_Try1.Models {
                                     Title = (string)reader["title"],
                                     Image = reader["image"] == DBNull.Value
                                             ? "default.png" : (string)reader["image"],
+                                    Desp = reader["description"] == DBNull.Value
+                                            ? "No Caterogy" : (string)reader["description"],
+                                    Plays = reader["plays"] == DBNull.Value
+                                            ? 0 : (int)reader["plays"],
                                     QuestionList = questionDM.FindQuestionByQuizID(quizID)
                                 };
                                 return q;
@@ -188,6 +200,10 @@ namespace Project_Try1.Models {
                                 ID = (int)reader["id"],
                                 Title = (string)reader["title"],
                                 Image = (string)reader["image"],
+                                Desp = reader["description"] == DBNull.Value
+                                            ? "No Caterogy" : (string)reader["description"],
+                                Plays = reader["plays"] == DBNull.Value
+                                            ? 0 : (int)reader["plays"],
                                 Creator = (string)reader["creator"]
                             };
 
@@ -213,6 +229,7 @@ namespace Project_Try1.Models {
                         cmd.Parameters.AddWithValue("@creator", q.Creator);
                         cmd.Parameters.AddWithValue("@title", q.Title);
                         cmd.Parameters.AddWithValue("@image", q.Image);
+                        cmd.Parameters.AddWithValue("@desp", q.Desp);
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -236,6 +253,7 @@ namespace Project_Try1.Models {
                         cmd.Parameters.AddWithValue("@id", q.ID);
                         cmd.Parameters.AddWithValue("@title", q.Title);
                         cmd.Parameters.AddWithValue("@image", q.Image);
+                        cmd.Parameters.AddWithValue("@desp", q.Desp);
                         cmd.ExecuteNonQuery();
                     }
                 }

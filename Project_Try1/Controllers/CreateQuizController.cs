@@ -26,7 +26,8 @@ namespace Project_Try1.Controllers {
             if (file == null)
             {
                 Session["Title"] = title;
-                Session["Image"] = "default.png";                
+                Session["Image"] = "default.png";
+                Session["Desp"] = frm["TxtDesc"];
                 return View("AddQuestion");
             }
             
@@ -47,6 +48,7 @@ namespace Project_Try1.Controllers {
                     ViewBag.Message = "File uploaded successfully";
                     Session["Title"] = title;
                     Session["Image"] = file.FileName;
+                    Session["Desp"] = frm["TxtDesc"];
 
                     return View("AddQuestion");
                 }
@@ -118,7 +120,7 @@ namespace Project_Try1.Controllers {
             string c3 = frm["TxtC3"];
             string c4 = frm["TxtC4"];
             string ans = frm["TxtAns"];
-            string image = "";
+            string image = "default.png";
             string content = frm["TxtContent"];
 
             if (file != null && file.ContentLength > 0)
@@ -168,7 +170,6 @@ namespace Project_Try1.Controllers {
             Session["Title"] = null;
             Session["Image"] = null;
 
-
             return RedirectToAction("Index", "MyQuiz");
         }
 
@@ -190,6 +191,7 @@ namespace Project_Try1.Controllers {
                 Title = (string)Session["Title"],
                 Image = (string)Session["Image"],
                 Creator = (string)Session["Creator"],
+                Desp = (string)Session["Desp"],
                 QuestionList = new List<Question>()
             };
 

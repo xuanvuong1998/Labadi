@@ -122,33 +122,39 @@
                                 <i style="font-size: 30px" class="fa fa-file-image-o" aria-hidden="true"></i>
 
                             </label>
-                            <input id="file-upload" type="file" name="file" value=""/>
+                            <input id="file-upload" type="file" name="file" value="@Model.Image"/>
                             <span style="padding-left: 20px" class="label-file"></span>
                         </div>
 
                     </div>
 
+                    @{ 
+                        var x = new string[] { "A", "B", "C", "D" };
+                        var y = new string[] { "10", "20", "30", "60", "90", "120" };
+                    }
 
                     <div class="row text-center">
                         <div class="col-md-2 col-xs-1"></div>
                         <div class="col-md-4 col-xs-12">
                             <select id="TxtRight" style="background-color: coral" class="select-right-answers" name="TxtAns">
-                                <option value="">Select right answer !</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
+                               @foreach(var item in x) {
+                                   if (item.Equals(Model.Answer)) {
+                                       <option value="@item" selected>@item</option>
+                                   } else {
+                                       <option value="@item">@item</option>
+                                   }
+                               }                                
                             </select>
                         </div>
                         <div class="col-md-4 col-xs-12">
                             <select id="TxtTime" class="select-right-answers" style="background-color: yellow" name="TxtTime">
-                                <option value="">Choose time !</option>
-                                <option value="10">10s</option>
-                                <option value="20">20s</option>
-                                <option value="30">30s</option>
-                                <option value="60">60s</option>
-                                <option value="90">90s</option>
-                                <option value="120">120s</option>
+                                @foreach (var item in y) {
+                                    if (item.Equals(Model.Time)) {
+                                        <option value="@item" selected>@item</option>
+                                    } else {
+                                        <option value="@item">@item</option>
+                                    }
+                                }
                             </select>
                         </div>
 

@@ -11,16 +11,12 @@ namespace Project_Try1.Controllers
     public class HomeController : Controller
     {
         // GET: Test
-
-        [Authorize]
+                
         public ActionResult Home()
         {
 
-            QuizBank bank = new QuizBank();
-            //QuestionDM que = new QuestionDM();
-            List<Quiz> list = bank.LoadTopQuizs(50);
-            //que.LoadQuestionList();
-            //List<Question> list = que.GetQuestions();
+            QuizBank bank = new QuizBank();            
+            List<Quiz> list = bank.LoadTopQuizs(100);           
             ViewBag.QuizBank = list;
             
             return View();

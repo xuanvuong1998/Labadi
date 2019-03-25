@@ -88,6 +88,7 @@ namespace Project_Try1.Models {
                             while (reader.Read()) {
                                 Question q = new Question {
                                     ID = (int)reader["id"],
+                                    QuizID = (int)reader["quizID"],
                                     Content = (string)reader["queContent"],
                                     AnsA = (string)reader["answerA"],
                                     AnsB = (string)reader["answerB"],
