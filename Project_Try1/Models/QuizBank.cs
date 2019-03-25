@@ -14,23 +14,23 @@ namespace Project_Try1.Models {
         public string Desp { get; set; }
         public int Plays { get; set; }
 
-
         public List<Question> QuestionList { get; set; }
 
     }
 
     public class QuizBank {
 
-        public List<Quiz> LoadTopQuizs(int top) {
+        public List<Quiz> LoadQuizzesPerPage(int quizPerPage, int pageNo) {
             List<Quiz> list = null;
             try {
                 using (var con = DBUtils.GetConnection()) {
-                    string sql = "SELECT TOP (@xxx) * FROM Quiz";
+                    
 
                     con.Open();
-                    using (var cmd = new SqlCommand(sql, con)) {
-                        cmd.Parameters.AddWithValue("@xxx",  top );
-
+                    using (var cmd = new SqlCommand("LoadQuizzesPerPage", con)) {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@offset", (pageNo - 1) * quizPerPage);
+                        cmd.Parameters.AddWithValue("@quizPerPage", quizPerPage);
                         using (var reader = cmd.ExecuteReader()) {
 
                             if (reader.HasRows) {

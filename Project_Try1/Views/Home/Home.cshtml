@@ -1,5 +1,7 @@
 ﻿<!DOCTYPE html>
-
+@{
+    Layout = null;
+}
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -9,8 +11,10 @@
     <link href="~/Content/home.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Open+Sans+Condensed:300|Righteous" rel="stylesheet">
 
-
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script>
+
+    </script>
     <style>
     </style>
 </head>
@@ -33,8 +37,8 @@
 
                     </li>
                     <li class="page-scroll">
-                        @if (Session["creator"] == null) {                           
-                           @Html.ActionLink("Login", "index", "Login", new { area = "" }, new { @class = "myquiz " });
+                        @if (Session["creator"] == null) {
+                            @Html.ActionLink("Login", "index", "Login", new { area = "" }, new { @class = "myquiz " });
                         }
                     </li>
                     <li class="page-scroll">
@@ -47,7 +51,7 @@
                         @if (Session["creator"] != null) {
                             @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = "" })
                         }
-                        </li>
+                    </li>
                 </ul>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -59,31 +63,20 @@
     <h2 id="pageHeader" class="create-quiz-title-page">Top Quizzes in the World</h2>
     <div class="container">
         <div class="row">
-            @foreach (var item in ViewBag.QuizBank) {
-                <div class="quiz-home col-xs-6 col-sm-3 col-md-3 col-lg-3">
-
-                    <div class="thumbnail">
-                        <div class="caption text-center">
-
-                            <img src="~/resources/images/QuizImages/@item.Image" class="img" />                            
-                            <h3 class="quiz-title">@item.Title</h3>
-                                                        
-                            <p>
-                                <span>Creator: <font color="gray">@item.Creator</font></span><br/>
-                                <span>Plays: <font color="red">@item.Plays</font></span><br/>
-                                <a href="#" class="btn btn-danger">Play now</a>                                
-                            </p>
-                            
-                        </div>
-
-                    </div>
-                </div>
-
-            }
-
+            @Html.Partial("DisplayQuiz", ViewBag.QuizBank as List<Project_Try1.Models.Quiz>)
         </div>
-
-
     </div>
+    @section scripts{
+        <script src="~/Scripts/lazyLoading.js"></script>
+        <script type="text/javascript">
+           var url = '@Url.RouteUrl("QuizzesList")';
+            $(document).ready(function () {
+                $(window).scroll(scrollHandler);
+            }
+            );
+        </script>
+    }
 </body>
 </html>
+
+

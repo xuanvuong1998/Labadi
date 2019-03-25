@@ -10,22 +10,46 @@ namespace Project_Try1.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Test
+
+        private const int QuizPerPage = 8;
+
+        public HomeController() {
+            ViewBag.QuizPerPage = QuizPerPage;
+        }
                 
         public ActionResult Home()
         {
-
-            QuizBank bank = new QuizBank();            
-            List<Quiz> list = bank.LoadTopQuizs(100);           
-            ViewBag.QuizBank = list;
-            
-            return View();
+            return RedirectToAction("GetQuizzes");
         }
+        
+        public ActionResult GetQuizzes(int? pageNum) {
+            pageNum = pageNum ?? 1;
+            ViewBag.IsEndOfQuizzes = false;
+            var quizzes = getQuizzesForPage(pageNum.Value);
+
+            ViewBag.IsEndOfQuizzes = quizzes.Any();           
+
+            if (Request.IsAjaxRequest()) {
+                return PartialView("DisplayQuiz", quizzes);
+            }
+            ViewBag.QuizBank = quizzes;
+            return View("Home");
+            
+        }
+
+        private List<Quiz> getQuizzesForPage(int pageNum) {
+            QuizBank bank = new QuizBank();
+            return bank.LoadQuizzesPerPage(QuizPerPage, pageNum);
+        }
+
+
         public RedirectToRouteResult Logout()
         {
             Session["creator"] = null;
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Login");
         }
+
+        
     }
 }
