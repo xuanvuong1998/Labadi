@@ -9,14 +9,18 @@
                 <img src="~/resources/images/QuizImages/@item.Image" class="img" />
                 <h3 class="quiz-title">@item.Title</h3>
 
-                <p>
-                    <span>Creator: <font color="gray">@item.Creator</font></span><br />
-                    <span>Plays: <font color="red">@item.Plays</font></span><br />
-                    <a href="#" class="btn btn-danger">Play now</a>
+                <p class="creator-play-butt">
+                    <div class="row text-center">
+                        <span class="col-xs-12 col-md-6 text-right" style="color: grey">By <font style="font-weight: bolder; color: black">@item.Creator</font></span>
+                        <span class="col-xs-12 col-md-6 text-left">Plays: <font color="red">@item.Plays</font></span>
+                    </div>
+
+                    <a style="margin-top: 20px;" href="#" class="btn btn-danger">Play now</a>
                 </p>
 
             </div>
 
         </div>
     </div>
+
 }

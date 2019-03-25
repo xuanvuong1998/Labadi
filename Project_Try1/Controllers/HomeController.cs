@@ -29,7 +29,7 @@ namespace Project_Try1.Controllers
 
             ViewBag.IsEndOfQuizzes = quizzes.Any();           
 
-            if (Request.IsAjaxRequest()) {
+            if (Request.IsAjaxRequest()) {                
                 return PartialView("DisplayQuiz", quizzes);
             }
             ViewBag.QuizBank = quizzes;
