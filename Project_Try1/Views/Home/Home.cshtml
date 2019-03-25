@@ -1,9 +1,12 @@
 ﻿<!DOCTYPE html>
-
+@{
+    Layout = null;
+}
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Home</title>
+    <title>Home - Labadi.ml -  </title>
+    <link rel="icon" type="image/png" href="@Url.Content("~/resources/images/icons/favicon.ico")" />
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/home.css" rel="stylesheet" type="text/css" />
@@ -68,10 +71,13 @@
                             <img src="~/resources/images/QuizImages/@item.Image" class="img" />                            
                             <h3 class="quiz-title">@item.Title</h3>
                                                         
-                            <p>
-                                <span>Creator: <font color="gray">@item.Creator</font></span><br/>
-                                <span>Plays: <font color="red">@item.Plays</font></span><br/>
-                                <a href="#" class="btn btn-danger">Play now</a>                                
+                            <p class="creator-play-butt">
+                                <div class="row text-center">
+                                    <span class="col-xs-12 col-md-6 text-right" style="color: grey">By <font style="font-weight: bolder; color: black">@item.Creator</font></span>
+                                    <span class="col-xs-12 col-md-6 text-left">Plays: <font color="red">@item.Plays</font></span>
+                                </div>
+                                
+                                <a style="margin-top: 20px;" href="#" class="btn btn-danger">Play now</a>
                             </p>
                             
                         </div>

@@ -17,6 +17,7 @@
 
     <!-- Title Page-->
     <title>Register Labadi.ml</title>
+    <link rel="icon" type="image/png" href="@Url.Content("~/resources/images/icons/favicon.ico")" />
 
     <!-- Icons font CSS-->
     <link href="@Url.Content("~/resources/vendor/mdi-font/css/material-design-iconic-font.min.css")" rel="stylesheet" media="all">
@@ -179,7 +180,12 @@
                 $('#' +idErrTag).html(errString +'  is required !');
                 $('#' +idErrTag).css('color', 'red');
                 result = false;
-            } else {
+            }else if ($('#' + idTag).val().length > 50) {
+                $('#' + idErrTag).html(errString + ' was too long !');
+                $('#' + idErrTag).css('color', 'red');
+                result = false;
+            }
+            else {
                 $('#' +idErrTag).html('');
             }
             return result;
