@@ -38,7 +38,7 @@
                     $('#' + idErrTag).css('color', 'red');
                     $('html, body').animate({ scrollTop: 0 });
                     result = false;
-                }else if ($('#' + idTag).val().length > 50) {
+                }else if ($('#' + idTag).val().length > 250) {
                     $('#' + idErrTag).html( 'This title was too long !');
                     $('#' + idErrTag).css('color', 'red');
                     result = false;
