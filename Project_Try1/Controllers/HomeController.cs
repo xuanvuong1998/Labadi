@@ -10,7 +10,6 @@ namespace Project_Try1.Controllers
 {
     public class HomeController : Controller
     {
-
         private const int QuizPerPage = 8;
 
         public HomeController() {

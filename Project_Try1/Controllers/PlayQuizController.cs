@@ -13,7 +13,6 @@ namespace Project_Try1.Controllers
         [Authorize]
         public ActionResult Index(string quizID)
         {
-
             QuizBank bank = new QuizBank();
 
             Quiz q = bank.FindQuizByID(int.Parse(quizID));
