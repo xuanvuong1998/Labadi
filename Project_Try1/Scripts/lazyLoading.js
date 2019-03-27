@@ -4,7 +4,7 @@
 var scrollHandler = function () {
     //alert($(document).height() + " " + $(document).width() + " " + $(window).height() + " " + $(window).width());
 
-    if ($(document).scrollTop() >= page * $(".quiz-home").height() * 0.86) {        
+    if ($(document).scrollTop() >= page * $(".quiz-home").height() * 0.7) {        
         loadQuizzes(url);
     }
 }

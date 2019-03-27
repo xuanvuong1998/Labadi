@@ -22,10 +22,12 @@
         <script src="~/resources/vendor/tilt/tilt.jquery.min.js"></script>
 
         <script type="text/javascript">
+         
             $(function () {
                 $("input:file").change(function () {
                     var fileName = $(this).val();
-                    $(".label-file").html(fileName);
+                    var tmp = fileName.split(":")[1].split("\\");
+                    $(".label-file").html(tmp[tmp.length - 1]);
                 });
             });
         </script>
