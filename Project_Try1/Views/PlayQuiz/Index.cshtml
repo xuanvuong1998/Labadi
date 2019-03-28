@@ -15,6 +15,10 @@
     <script src="~/signalr/hubs"></script>
 </head>
 <body>
+
+    PIN TO JOIN:
+    <h1 id="pin"></h1>
+
     <h2>Waiting for PLAYERS</h2>
     <div class="container">
         <ul id="discussion"></ul>
@@ -26,10 +30,19 @@
     }
 
     <script>
+        function generateRandomPIN() {
+            return Math.floor((Math.random()) * 100000000 + 1) + "";
+        }
+
         $(function () {
             // Reference the auto-generated proxy for the hub.
             var main = $.connection.mainHub;
             // Create a function that the hub can call back to display messages.
+
+            main.client.getPIN = function (PIN) {
+                $("#pin").html(PIN);
+            }
+
             main.client.notify = function (username) {
                 // Add the message to the page.
                 $('#discussion').append('<li><strong>' + htmlEncode(username)
@@ -39,7 +52,7 @@
 
             $.connection.hub.start().done(function () {
                 $(document).ready(function () {
-                    main.server.initQuiz("231098");
+                    main.server.initQuiz(generateRandomPIN());
                 });
             });
         });

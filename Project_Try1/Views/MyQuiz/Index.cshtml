@@ -125,7 +125,7 @@
                                     Delete
                                 </button>
                             }
-                            @using (Html.BeginForm("Index", "PlayQuiz", FormMethod.Get, new { style = "display: inline-block;" }))
+                            @using (Html.BeginForm("Play", "PlayQuiz", FormMethod.Get, new { style = "display: inline-block;" }))
                             {
                                 <input type="hidden" name="quizID" value="@item.ID" /><br />
                                 <input class="btn btn-danger" type="submit" value="Play" />

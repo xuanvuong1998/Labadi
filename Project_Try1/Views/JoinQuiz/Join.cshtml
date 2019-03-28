@@ -37,8 +37,11 @@
     </style>
 </head>
 <body>
+    
 
-    @using (Html.BeginForm("JoinSuccess", "JoinQuiz")) {
+    <form action="/JoinQuiz/JoinSuccess" id="joinFrm"> 
+
+
         <div class="container">
             <div class="row text-center main-frame">
                 <div class="row line-in-form">
@@ -51,17 +54,25 @@
                 </div>
                 <div class="row text-center">
                     <input type="hidden" name="ID" value="" />
-                    <input id="joinBtn" style="box-shadow: none !important; width: 150px;background-image: linear-gradient(to bottom right, cornflowerblue, darkblue); color: white; margin-top: 30px" class="select-right-answers" type="submit" value=Join ! />
+                    <input id="joinBtn" style="box-shadow: none !important; width: 150px;background-image: linear-gradient(to bottom right, cornflowerblue, darkblue); color: white; margin-top: 30px" class="select-right-answers" type="button" value=Join ! />
                 </div>
             </div>
 
         </div>
-       
-    }
+    </form>
+    
     <script>
         $(function () {
             var mainHub = $.connection.mainHub;          
-           
+
+            mainHub.client.sendErr = function (mess) {
+                alert(mess);
+            };
+
+            mainHub.client.welcome = function (mess) {
+                $("#joinFrm").submit();
+            };
+
             $.connection.hub.start().done(function () {                
                 
                 $("#joinBtn").click(function () {

@@ -131,6 +131,7 @@
     <Content Include="Content\editQuiz.css" />
     <Content Include="Content\main.css" />
     <Content Include="Content\myQuiz.css" />
+    <Content Include="Content\play_client.css" />
     <Content Include="Content\quizDetails.css" />
     <Content Include="Content\register.css" />
     <Content Include="Content\Site.css" />
@@ -273,6 +274,7 @@
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\playGame.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

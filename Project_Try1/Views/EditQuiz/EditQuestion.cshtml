@@ -37,7 +37,6 @@
         function checkRequired(idTag, idErrTag, errString) {
             var result = true;
 
-
             if ($('#' + idTag).val() == "") {
                 $('#' + idErrTag).html("Oops ! You haven't " + errString + '  !');
                 $('#' + idErrTag).css('color', 'red');
@@ -72,7 +71,6 @@
             if (result) {
                 $('#frm_quiz_detail').submit();
             }
-
 
         }
 
@@ -132,7 +130,7 @@
 
                     @{ 
                         var x = new string[] { "A", "B", "C", "D" };
-                        var y = new string[] { "10", "20", "30", "60", "90", "120" };
+                        var y = new int[] { 10, 20, 30, 60, 90, 120 };
                     }
 
                     <div class="row text-center">
@@ -140,7 +138,7 @@
                         <div class="col-md-4 col-xs-12">
                             <select id="TxtRight" style="background-color: coral" class="select-right-answers" name="TxtAns">
                                @foreach(var item in x) {
-                                   if (item.Equals(Model.Answer)) {
+                                   if (item == Model.Answer) {
                                        <option value="@item" selected>@item</option>
                                    } else {
                                        <option value="@item">@item</option>
@@ -151,10 +149,11 @@
                         <div class="col-md-4 col-xs-12">
                             <select id="TxtTime" class="select-right-answers" style="background-color: yellow" name="TxtTime">
                                 @foreach (var item in y) {
-                                    if (item.Equals(Model.Time)) {
-                                        <option value="@item" selected>@item</option>
+                                    if (item == Model.Time) {
+                                        
+                                        <option value="@item" selected>@item (s)</option>
                                     } else {
-                                        <option value="@item">@item</option>
+                                        <option value="@item">@item (s)</option>
                                     }
                                 }
                             </select>
@@ -162,13 +161,10 @@
 
                     </div>
 
-
-
                     <div class="row text-center">
                         <input type="hidden" name="quizID" value="@ViewBag.QuizID" />
 
-                        <input style="background-color: cornflowerblue" class="select-right-answers" type="button" onclick="submitFrm();" value="Ok! Add To Quiz" />
-
+                        <input style="background-color: cornflowerblue" class="select-right-answers" type="button" onclick="submitFrm();" value="Ok! Save!" />
 
                     </div>
 

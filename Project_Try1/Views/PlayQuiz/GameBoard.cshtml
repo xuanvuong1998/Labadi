@@ -56,43 +56,76 @@
         <h3>Questions</h3>
         <div id="questions">
 
-            <input type="hidden" id="selectedQue" value=""/>
+            @{
+                int index = 0;
+            }
+
+            <input type="hidden" id="content" />
+            <input type="hidden" id="ans1" />
+            <input type="hidden" id="ans2" />
+            <input type="hidden" id="ans3" />
+            <input type="hidden" id="ans4" />
+            <input type="hidden" id="ans" />
+            <input type="hidden" id="image" />
+            <input type="hidden" id="time" />
+
             @foreach (var item in Model.QuestionList) {
+
+                index++;
+
+                string contentID = "con" + index;
+                string ans1ID = "ans1" + index;
+                string ans2ID = "ans2" + index;
+                string ans3ID = "ans3" + index;
+                string ans4ID = "ans4" + index;
+                string ansID = "rightAns" + index;
+                string imageID = "image" + index;
+                string timeID = "time" + index;
+
+
                 <div class="aQue">
                     <div class="content">
-                        <h3>@item.Content</h3>
-                        A. <span>@item.AnsA</span><br />
-                        B. <span>@item.AnsB</span><br />
-                        C. <span>@item.AnsC</span><br />
-                        D. <span>@item.AnsD</span><br />
-                        Answer: <span>@item.Answer</span>
+
+                        <h3 id="@contentID">@item.Content</h3>
+                        A. <span id="@ans1ID">@item.AnsA</span><br />
+                        B. <span id="@ans2ID">@item.AnsB</span><br />
+                        C. <span id="@ans3ID">@item.AnsC</span><br />
+                        D. <span id="@ans4ID">@item.AnsD</span><br />
+                        Answer: <span id="@ansID">@item.Answer</span>
+                        Time: <span id="@timeID">@item.Time</span>
 
                         <br />
-                        <input type="submit" value="SEND QUESTION" onclick="setValue(''' + @item.AnsA + ''')" class="send" />
+                        <input type="submit" value="SEND QUESTION" class="send" onclick="setValues(@index)" />
 
                     </div>
-                    <div class="queImg">
-                        <img src="~/resources/images/QuestionImages/@item.Image" />
+                    <div class="queImg">    
+                        <img id="@imageID" src="~/resources/images/QuestionImages/@item.Image" />
                     </div>
                 </div>
             }
 
-
         </div>
     </div>
     <script>
-        function setValue(content) {            
-            $("#selectedQue").val(content);
-        }
-        $(function () {
-            var main = $.connection.mainHub;
-            $.connection.hub.start().done(function () {
-                $(".send").click(function () {
-                    main.server.sendQuestionsToClient("hello");
-                });
-            });
+        function setValues(index) {
+            $("#content").val($("#con" + index).html());
+            $("#ans1").val($("#ans1" + index).html());
+            $("#ans2").val($("#ans2" + index).html());
+            $("#ans3").val($("#ans3" + index).html());
+            $("#ans4").val($("#ans4" + index).html());
+            $("#time").val($("#time" + index).html());
+            $("#ans").val($("#rightAns" + index).html());
+            $("#image").val($("#image" + index).attr('src'));
 
-        });
+            var main = $.connection.mainHub;    
+            $.connection.hub.start().done(function () {
+                main.server.sendQuestionsToClient(
+                    $("#content").val(), $("#ans1").val(), $("#ans2").val(),
+                    $("#ans3").val(), $("#ans4").val(), $("#ans").val(), $("#image").val(), $('#time').val()) ;
+            });
+        }
+
+        
     </script>
 </body>
 </html>

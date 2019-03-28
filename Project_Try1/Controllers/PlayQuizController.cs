@@ -10,18 +10,7 @@ namespace Project_Try1.Controllers
     public class PlayQuizController : Controller
     {
         // GET: PlayQuiz
-        [Authorize]
-        public ActionResult Index(string quizID)
-        {
-            QuizBank bank = new QuizBank();
-
-            Quiz q = bank.FindQuizByID(int.Parse(quizID));
-
-            var list = new List<string>();
-
-            Session["playerList"] = list;
-            return View("Index", q);
-        }
+        
         
         public ActionResult Play(string quizID) {
             QuizBank bank = new QuizBank();
@@ -31,6 +20,7 @@ namespace Project_Try1.Controllers
 
         }
 
+        
         public ActionResult Start(string quizID) {
             QuizBank bank = new QuizBank();
 
