@@ -13,6 +13,7 @@ namespace Project_Try1 {
         private static List<Player> players = new List<Player>();
         private static List<string> waitingPlayers = new List<string>();
         private static List<OpenQuiz> quizzes = new List<OpenQuiz>();
+        private static Dictionary<string, int> correctsNum = new Dictionary<string, int>();
         
         public void InitQuiz(string quizPIN) {     
             
@@ -58,20 +59,71 @@ namespace Project_Try1 {
             }                        
         }
 
+        public void SendReport(bool res) {
+            if (res == true) {
+                correctsNum[Context.ConnectionId]++;
+            }
+        }
+
+        public void SummaryResult(string quizPIN) {
+            string summary = "";
+            
+            List<KeyValuePair<string, int>> list = new List<KeyValuePair<string, int>>();
+
+            for(int i = 0; i < waitingPlayers.Count; i++) {
+                list.Add(new KeyValuePair<string, int>(players[i].Name, correctsNum[waitingPlayers[i]]));
+            }
+
+            list.OrderBy(x => x.Value);
+
+            for(int i = list.Count - 1; i >= 0; i--) {
+                summary += "TOP " + (list.Count - i) + ": " + 
+                        list[i].Key + " - " + list[i].Value + "@" + System.Environment.NewLine;
+            }
+
+            for (int i = 0; i < players.Count; i++) if (players[i].QuizPIN == quizPIN) {
+                    Clients.Client(waitingPlayers[i]).sendSummary(summary);
+                }
+            //Clients.Clients(waitingPlayers).sendSummary(summary);
+        }
+        
         public void AcceptPlayers(){            
             waitingPlayers.Add(Context.ConnectionId);
+            correctsNum[Context.ConnectionId] = 0;
         }
        
 
         public void sendQuestionsToClient(string content, string ans1, string ans2, 
             string ans3, string ans4, string ans, string image, string time, string quizPIN) {
-            //Clients.All.receiveQuestion(q);
-                        
-            for(int i = 0; i < players.Count; i++) if (players[i].QuizPIN == quizPIN) {
+            //Clients.All.receiveQuestion(q);                        
+            for(int i = 0; i < players.Count; i++) if (players[i].QuizPIN == quizPIN) {                    
                     Clients.Client(waitingPlayers[i]).receiveQuestion(content, ans1, ans2,
                     ans3, ans4, ans, image, time);
                 }            
         }
-       
+
+
+        public override Task OnDisconnected(bool stopCalled) {
+            
+
+            int foundIndex = -1;
+            for(int i = 0; i < waitingPlayers.Count; i++) {
+                if (waitingPlayers[i] == Context.ConnectionId) {
+                    foundIndex = i;
+                }
+            }            
+
+            if (foundIndex != -1) {
+                players.RemoveAt(foundIndex);
+                waitingPlayers.RemoveAt(foundIndex);
+            }
+
+            var item = quizzes.SingleOrDefault(x => x.ConnectionID == Context.ConnectionId);
+            if (item != null) {
+                quizzes.Remove(item);
+            }
+            
+            return base.OnDisconnected(stopCalled);
+        }
     }
 }

@@ -98,13 +98,18 @@
                         <input type="submit" value="SEND QUESTION" class="send" onclick="setValues(@index)" />
 
                     </div>
-                    <div class="queImg">    
+                    <div class="queImg">
                         <img id="@imageID" src="~/resources/images/QuestionImages/@item.Image" />
                     </div>
                 </div>
             }
         </div>
     </div>
+
+    <div>
+        <input id="getReport" type="button" value="GET RESULTS" />
+    </div>
+
     <script>
         function setValues(index) {
             $("#content").val($("#con" + index).html());
@@ -116,10 +121,15 @@
             $("#ans").val($("#rightAns" + index).html());
             $("#image").val($("#image" + index).attr('src'));
 
-            var main = $.connection.mainHub;    
+            var main = $.connection.mainHub;
 
-            $.connection.hub.start().done(function () {                
-                
+            $("#getReport").click(function () {
+                main.server.summaryResult(@ViewBag.quizPIN);
+            });
+
+            $.connection.hub.start().done(function () {
+
+
                 main.server.sendQuestionsToClient(
                     $("#content").val(), $("#ans1").val(), $("#ans2").val(),
                     $("#ans3").val(), $("#ans4").val(), $("#ans").val(),
@@ -127,7 +137,7 @@
             });
         }
 
-        
+
     </script>
 </body>
 </html>

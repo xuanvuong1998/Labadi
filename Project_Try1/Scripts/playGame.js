@@ -1,4 +1,5 @@
 ﻿var status = "waiting";
+var mainHub = $.connection.mainHub;
 
 function showStatus() {
     $("#waitingForAns").css(
@@ -18,6 +19,8 @@ function showStatus() {
             'display': 'block'
         }
     );
+
+    
 }
 
 
@@ -62,8 +65,37 @@ function checkResult(selectedAnswer) {
     waitForAns();
 }
 
+function showSummary() {
+    $("#status").css(
+        {
+            'display': 'none'
+        }
+    );
+    $("#main-question").css(
+        {
+            'display': 'none'
+        }
+    )
+    $("#waitingForAns").css(
+        {
+            'display': 'none',
+        }
+    )
+
+    $("#summary").css(
+        {
+            'display': 'block'
+        }
+    );
+
+
+}
+
 $(function () {
-    var mainHub = $.connection.mainHub;
+    mainHub.client.sendSummary = function (summary) {        
+        $("#summary").html(summary);
+        showSummary();
+    }
 
     mainHub.client.receiveQuestion = function (content, ans1, ans2, ans3, ans4, ans, image, time) {
         if (status != "waiting") {       
@@ -123,11 +155,13 @@ function activeTimer(rightAns) {
         document.getElementById("timer-counter").innerText = y + "";
 
         if (y <= 0) {
-                                  
+            
             clearInterval(x);
             document.getElementById("timer-counter").innerText = "Time up ! ";
-            
+
+            var result = true;
             if (status == "thinking") {
+                result = false;
                 $("#status").html("You did not choose any answer!!!");
                 $("#status").css(
                     {
@@ -141,6 +175,7 @@ function activeTimer(rightAns) {
                         'background-image': 'linear-gradient(to bottom right,green, greenyellow)'
                     });
             } else {
+                result = false;
                 $("#status").html("INCORRECT!!!");
                 $("#status").css(
                     {
@@ -150,7 +185,7 @@ function activeTimer(rightAns) {
 
             status = "waiting";
             showStatus();
-
+            mainHub.server.sendReport(result);
         }
     }, 1000);
 }

@@ -20,48 +20,12 @@
 
     <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Open+Sans+Condensed:300|Righteous" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
-
-    <style>
-        .waiting-for-playing {
-            width: 800px;
-            height: 600px;
-            padding: 20px;
-            background-color: lightseagreen;
-            border-radius: 10px;
-            line-height: 500px;
-            font-weight: bold;
-            box-shadow: 10px 5px darkturquoise;
-            color: white;
-            font-size: 60px;
-            font-family: 'Baloo Chettan';
-            position: fixed;
-            top: 100px;
-            left: 25%;
-        }
-
-        .waiting-for-result {
-            width: 800px;
-            height: 600px;
-            padding: 20px;
-            background-color: dodgerblue;
-            border-radius: 10px;
-            line-height: 500px;
-            font-weight: bold;
-            box-shadow: 10px 5px darkturquoise;
-            color: white;
-            font-size: 60px;
-            font-family: 'Baloo Chettan';
-            position: fixed;
-            top: 100px;
-            left: 25%;
-            display: none;
-        }
-    </style>
+    
 </head>
 <body>
     <div class="row text-center">
         <div id="waitingForAns" class="waiting-for-result">
-            Ohh! You're too fast!
+            We got your answer. Wait a sec to see result!
         </div>
     </div>
     <div class="row text-center">
@@ -99,7 +63,9 @@
         </div>
     </div>
 
-
+    <div id="summary">
+        
+    </div>
 
 </body>
 </html>

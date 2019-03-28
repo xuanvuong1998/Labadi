@@ -336,6 +336,7 @@
     <Content Include="Views\JoinQuiz\WaittingGame.cshtml" />
     <Content Include="Views\PlayQuiz\Index.cshtml" />
     <Content Include="Views\PlayQuiz\GameBoard.cshtml" />
+    <Content Include="Views\PlayQuiz\temp.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
