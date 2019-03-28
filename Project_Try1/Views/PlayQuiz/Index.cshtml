@@ -25,8 +25,10 @@
     </div>
 
     @using (Html.BeginForm("Start", "PlayQuiz", FormMethod.Post, new { style = "display: inline-block;" })) {
+        
+        <input id="quizPIN" type="hidden" name="quizPIN"/>
         <input type="hidden" name="quizID" value="@Model.ID" /><br />
-        <input class="btn btn-danger" type="submit" value="Play" />
+        <input class="btn btn-danger" id="start" type="submit" value="Play" />
     }
 
     <script>
@@ -38,9 +40,15 @@
             // Reference the auto-generated proxy for the hub.
             var main = $.connection.mainHub;
             // Create a function that the hub can call back to display messages.
+                        
+
+            main.client.sendErr = function (mess) {
+                Location.reload(true);
+            };
 
             main.client.getPIN = function (PIN) {
                 $("#pin").html(PIN);
+                $("#quizPIN").val(PIN);
             }
 
             main.client.notify = function (username) {
@@ -50,7 +58,7 @@
             };
             // Get the user name and store it to prepend to messages.
 
-            $.connection.hub.start().done(function () {
+            $.connection.hub.start().done(function () {                
                 $(document).ready(function () {
                     main.server.initQuiz(generateRandomPIN());
                 });

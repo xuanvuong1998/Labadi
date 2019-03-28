@@ -13,33 +13,27 @@ namespace Project_Try1.Controllers
         
         
         public ActionResult Play(string quizID) {
+                        
+            if (quizID == null) {
+                return Redirect("/Home/Home");
+            }
             QuizBank bank = new QuizBank();
 
             Quiz q = bank.FindQuizByID(int.Parse(quizID));
             return View("Index", q);
-
-        }
-
         
-        public ActionResult Start(string quizID) {
+        }
+        
+        public ActionResult Start(string quizID, string quizPIN) {
             QuizBank bank = new QuizBank();
 
             Quiz q = bank.FindQuizByID(int.Parse(quizID));
+
+            ViewBag.quizPIN = quizPIN;
+            
             return View("GameBoard", q);
 
-        }
-
-
-        public ActionResult AcceptPlayers(string PIN, string playerID) {
-            
-            var list = Session["playerList"] as List<string>;
-           
-            list.Add(playerID);
-            
-            Session["playerList"] = list;
-            return View("Index");
-        }
-        
+        }               
         
     }
 }

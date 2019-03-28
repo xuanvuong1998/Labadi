@@ -103,7 +103,6 @@
                     </div>
                 </div>
             }
-
         </div>
     </div>
     <script>
@@ -118,10 +117,13 @@
             $("#image").val($("#image" + index).attr('src'));
 
             var main = $.connection.mainHub;    
-            $.connection.hub.start().done(function () {
+
+            $.connection.hub.start().done(function () {                
+                
                 main.server.sendQuestionsToClient(
                     $("#content").val(), $("#ans1").val(), $("#ans2").val(),
-                    $("#ans3").val(), $("#ans4").val(), $("#ans").val(), $("#image").val(), $('#time').val()) ;
+                    $("#ans3").val(), $("#ans4").val(), $("#ans").val(),
+                    $("#image").val(), $('#time').val(), @ViewBag.quizPIN);
             });
         }
 

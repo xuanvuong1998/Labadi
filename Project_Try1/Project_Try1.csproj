@@ -305,6 +305,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="OpenQuiz.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

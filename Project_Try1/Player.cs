@@ -7,7 +7,6 @@ namespace Project_Try1 {
     public class Player {
         public string Name { get; set; }
         public string PlayerID { get; set; }
-        public string QuizConnectionID { get; set; }
-
+        public string QuizPIN { get; set; }       
     }
 }
