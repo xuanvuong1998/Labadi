@@ -1,0 +1,100 @@
+﻿@model Project_Try1.Models.Quiz
+
+<link href="~/Content/quizDetails.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
+
+@{
+    ViewBag.Title = "View";
+    Layout = null;
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Home - Labadi.ml -  </title>
+    <link rel="icon" type="image/png" href="@Url.Content("~/resources/images/icons/favicon.ico")" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/home.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/myquiz.css" rel="stylesheet" type="text/css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Open+Sans+Condensed:300|Righteous" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
+
+
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/lazyLoading.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <style>
+        .main-frame {
+            border-radius: 10px;
+            width: 60%;
+            margin: auto;
+            background-image: linear-gradient(to bottom right, rgb(11, 63, 234), rgb(17, 157, 196));
+            box-shadow: 5px 5px lightskyblue;
+            padding: 50px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 overview-quiz ">
+                <div class="col-md-6">
+                    <img src="~/resources/images/QuizImages/@Model.Image" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="right">
+        <h3>Questions</h3>
+        <div id="questions">
+
+            <input type="hidden" id="selectedQue" value=""/>
+            @foreach (var item in Model.QuestionList) {
+                <div class="aQue">
+                    <div class="content">
+                        <h3>@item.Content</h3>
+                        A. <span>@item.AnsA</span><br />
+                        B. <span>@item.AnsB</span><br />
+                        C. <span>@item.AnsC</span><br />
+                        D. <span>@item.AnsD</span><br />
+                        Answer: <span>@item.Answer</span>
+
+                        <br />
+                        <input type="submit" value="SEND QUESTION" onclick="setValue(''' + @item.AnsA + ''')" class="send" />
+
+                    </div>
+                    <div class="queImg">
+                        <img src="~/resources/images/QuestionImages/@item.Image" />
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+    <script>
+        function setValue(content) {            
+            $("#selectedQue").val(content);
+        }
+        $(function () {
+            var main = $.connection.mainHub;
+            $.connection.hub.start().done(function () {
+                $(".send").click(function () {
+                    main.server.sendQuestionsToClient("hello");
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
+
+

@@ -13,7 +13,11 @@
                         <span class="col-xs-12 col-md-6 text-right" style="color: grey">By <font style="font-weight: bolder; color: black">@item.Creator</font></span>
                         <span class="col-xs-12 col-md-6 text-left">Plays: <font color="red">@item.Plays</font></span>
                     </div>
-                    <a style="margin-top: 20px;" href="#" class="btn btn-danger">Play now</a>
+                    
+                    @using (Html.BeginForm("Play", "PlayQuiz", FormMethod.Post, new { style = "display: inline-block;" })) {
+                        <input type="hidden" name="quizID" value="@item.ID" /><br />
+                        <input class="btn btn-danger" type="submit" value="Play" />
+                    }
                 </p>
 
             </div>

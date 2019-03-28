@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<!DOCTYPE html>
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Home - Labadi.ml -  </title>
+    <link rel="icon" type="image/png" href="@Url.Content("~/resources/images/icons/favicon.ico")" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/home.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/myquiz.css" rel="stylesheet" type="text/css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Open+Sans+Condensed:300|Righteous" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
+
+
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/lazyLoading.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <style>
+        .main-frame {
+            border-radius: 10px;
+            width: 60%;
+            margin: auto;
+            background-image: linear-gradient(to bottom right, rgb(11, 63, 234), rgb(17, 157, 196));
+            box-shadow: 5px 5px lightskyblue;
+            padding: 50px 0;
+        }
+    </style>
+</head>
+<body>
+
+    @using (Html.BeginForm("JoinSuccess", "JoinQuiz")) {
+        <div class="container">
+            <div class="row text-center main-frame">
+                <div class="row line-in-form">
+                    <div style="color: white" class="col-md-12 col-xs-12 text-center text-title ">Game PIN </div>
+                    <div class="col-md-12 col-xs-12 text-center"> <input id="gamePIN" class="form-control" name="gamePIN" value="" /></div>
+                </div>
+                <div class="row line-in-form">
+                    <div style="color: white" class="col-md-12 col-xs-12 text-center text-title ">Username </div>
+                    <div class="col-md-12 col-xs-12 text-center"> <input id="playerName" class="form-control" name="username" value="" /></div>
+                </div>
+                <div class="row text-center">
+                    <input type="hidden" name="ID" value="" />
+                    <input id="joinBtn" style="box-shadow: none !important; width: 150px;background-image: linear-gradient(to bottom right, cornflowerblue, darkblue); color: white; margin-top: 30px" class="select-right-answers" type="submit" value=Join ! />
+                </div>
+            </div>
+
+        </div>
+       
+    }
+    <script>
+        $(function () {
+            var mainHub = $.connection.mainHub;          
+           
+            $.connection.hub.start().done(function () {                
+                
+                $("#joinBtn").click(function () {
+                    mainHub.server.join($("#gamePIN").val(), $("#playerName").val());
+                });
+            });
+        });
+    </script>
+
+
+</body>
+</html>
