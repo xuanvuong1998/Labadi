@@ -129,10 +129,23 @@ function activeTimer(rightAns) {
             
             if (status == "thinking") {
                 $("#status").html("You did not choose any answer!!!");
+                $("#status").css(
+                    {
+                        'background-image': 'linear-gradient(to bottom right,blue, darkturquoise)'
+                    });
             }else if (isCorrect($("#selectedAns").html(), rightAns)) {
                 $("#status").html("CORRECT!!!");
+
+                $("#status").css(
+                    {
+                        'background-image': 'linear-gradient(to bottom right,green, greenyellow)'
+                    });
             } else {
                 $("#status").html("INCORRECT!!!");
+                $("#status").css(
+                    {
+                        'background-image': 'linear-gradient(to bottom right,crimson, orangered)'
+                    });
             }
 
             status = "waiting";

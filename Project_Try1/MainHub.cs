@@ -31,7 +31,6 @@ namespace Project_Try1 {
         }
 
         public void Join(string iPIN, string username) {
-
             if (PIN == iPIN && !IsJoined(username)) {                
                 Clients.Client(hostID).notify(username);
 

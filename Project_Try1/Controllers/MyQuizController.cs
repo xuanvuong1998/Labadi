@@ -10,9 +10,10 @@ namespace Project_Try1.Controllers
 {
     public class MyQuizController : Controller
     {
-
+       
         // GET: MyQuiz
         [Authorize]
+        
         public ActionResult Index()
         {           
             QuizBank bank = new QuizBank();
@@ -20,7 +21,7 @@ namespace Project_Try1.Controllers
             List<Quiz> list = bank.GetAllQuizesOfCreator((string)Session["creator"]);
             
             ViewBag.QuizList = list;
-            
+          
             return View();
         }
 
