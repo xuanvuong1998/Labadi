@@ -92,8 +92,14 @@ function showSummary() {
 }
 
 $(function () {
-    mainHub.client.sendSummary = function (summary) {        
-        $("#summary").html(summary);
+    mainHub.client.sendSummary = function (summary) {
+        var list = summary.split(';');
+
+        list.forEach(function (item) {
+            $("#summary").append("<div>" + htmlEncode(item) + "</div><br/>");
+        });
+
+        //$("#summary").html(summary);
         showSummary();
     }
 

@@ -8,7 +8,8 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>Play Quiz - Labadi.ml -  </title>
+    <link rel="icon" type="image/png" href="@Url.Content("~/resources/images/icons/favicon.ico")" />
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
     <script src="~/signalr/hubs"></script>
@@ -20,7 +21,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Open+Sans+Condensed:300|Righteous" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
-    
+
 </head>
 <body>
     <div class="row text-center">
@@ -45,9 +46,7 @@
                     <div id="timer-counter">
                     </div>
                 </div>
-                <div id="content" style="font-size: 40px; padding: 20px 0; font-weight: normal" class="row quiz-title"></div>
-
-
+                <div id="content" style="font-size: 40px; padding: 20px 0; font-weight: normal" class="row quiz-title"></div>                
                 <div id="ans1" onclick="checkResult(this)" style="background-color: red; color: white" class="row ans"></div>
                 <div id="ans2" onclick="checkResult(this)" style="background-color: green; color: white" class="row ans"></div>
                 <div id="ans3" onclick="checkResult(this)" style="background-color: blue; color: white" class="row ans"></div>

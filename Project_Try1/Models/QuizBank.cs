@@ -16,6 +16,9 @@ namespace Project_Try1.Models {
 
         public List<Question> QuestionList { get; set; }
 
+        public Quiz() {
+            QuestionList = new List<Question>();
+        }
     }
 
     public class QuizBank {
@@ -25,7 +28,6 @@ namespace Project_Try1.Models {
             try {
                 using (var con = DBUtils.GetConnection()) {
                     
-
                     con.Open();
                     using (var cmd = new SqlCommand("LoadQuizzesPerPage", con)) {
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -254,6 +256,25 @@ namespace Project_Try1.Models {
                         cmd.Parameters.AddWithValue("@title", q.Title);
                         cmd.Parameters.AddWithValue("@image", q.Image);
                         cmd.Parameters.AddWithValue("@desp", q.Desp);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            } catch (Exception e) {
+
+                throw e;
+            }
+        }
+
+        public void UpdatePlays(Quiz q) {
+            try {
+                using (var con = DBUtils.GetConnection()) {
+                    con.Open();
+                    string sql = "UPDATE Quiz SET plays = @plays WHERE ID = @id";
+                    using (var cmd = new SqlCommand(sql, con)) {
+                        
+                        cmd.Parameters.AddWithValue("@id", q.ID);
+                        cmd.Parameters.AddWithValue("@plays", q.Plays);
+                        
                         cmd.ExecuteNonQuery();
                     }
                 }

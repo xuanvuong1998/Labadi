@@ -75,10 +75,10 @@ namespace Project_Try1 {
             }
 
             list.OrderBy(x => x.Value);
-
+            
             for(int i = list.Count - 1; i >= 0; i--) {
-                summary += "TOP " + (list.Count - i) + ": " + 
-                        list[i].Key + " - " + list[i].Value + "@" + System.Environment.NewLine;
+                summary += list[i].Key + " - " + list[i].Value + " Points";
+                if (i > 0) summary += ";";
             }
 
             for (int i = 0; i < players.Count; i++) if (players[i].QuizPIN == quizPIN) {
@@ -105,7 +105,6 @@ namespace Project_Try1 {
 
         public override Task OnDisconnected(bool stopCalled) {
             
-
             int foundIndex = -1;
             for(int i = 0; i < waitingPlayers.Count; i++) {
                 if (waitingPlayers[i] == Context.ConnectionId) {

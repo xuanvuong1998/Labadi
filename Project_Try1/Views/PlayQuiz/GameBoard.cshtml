@@ -17,6 +17,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/home.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/myquiz.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/editQuiz.css" rel="stylesheet" type="text/css" />
 
     <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Open+Sans+Condensed:300|Righteous" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
@@ -43,74 +44,81 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-12 overview-quiz ">
-                <div class="col-md-6">
-                    <img src="~/resources/images/QuizImages/@Model.Image" />
+            <div>
+
+                <div>
+
+                    @{
+                        int index = 0;
+                    }
+
+                    <input type="hidden" id="content" />
+                    <input type="hidden" id="ans1" />
+                    <input type="hidden" id="ans2" />
+                    <input type="hidden" id="ans3" />
+                    <input type="hidden" id="ans4" />
+                    <input type="hidden" id="ans" />
+                    <input type="hidden" id="image" />
+                    <input type="hidden" id="time" />
+                    @if (Model.QuestionList != null) {
+
+                        foreach (var item in Model.QuestionList) {
+
+                            index++;
+
+                            string contentID = "con" + index;
+                            string ans1ID = "ans1" + index;
+                            string ans2ID = "ans2" + index;
+                            string ans3ID = "ans3" + index;
+                            string ans4ID = "ans4" + index;
+                            string ansID = "rightAns" + index;
+                            string imageID = "image" + index;
+                            string timeID = "time" + index;
+
+
+                        <div class=" row">
+                            <div class="queImg col-xs-12 col-md-4">
+                                <img id="@imageID" src="~/resources/images/QuestionImages/@item.Image" />
+                            </div>
+
+                            <div style="font-family: 'Baloo Chettan'; font-size: 30px;" class="content col-xs-12 col-md-6">
+
+                                <h3 id="@contentID">@item.Content</h3>
+                                A. <span style="color: blueviolet;font-family: 'Baloo Chettan'; font-size: 30px;" id="@ans1ID">@item.AnsA</span><br />
+                                B. <span style="color: darkcyan;font-family: 'Baloo Chettan'; font-size: 30px;" id="@ans2ID">@item.AnsB</span><br />
+                                C. <span style="color: deeppink;font-family: 'Baloo Chettan'; font-size: 30px;" id="@ans3ID">@item.AnsC</span><br />
+                                D. <span style="color: goldenrod;font-family: 'Baloo Chettan'; font-size: 30px;" id="@ans4ID">@item.AnsD</span><br />
+                                Answer: <span style="font-family: 'Baloo Chettan'; font-size: 30px;" id="@ansID">@item.Answer</span><br />
+                                Time: <span style="font-family: 'Baloo Chettan'; font-size: 30px;" id="@timeID">@item.Time</span>
+                                <br />
+                            </div>
+                            <div class="col-xs-12 col-md-2">
+                                <input type="submit" value="SEND QUESTION" class="send button-format" onclick="setValues(@index)" />
+                            </div>
+
+                        </div>
+                        <hr />
+                        }
+                    } else {
+                        <div>SORRY THERE is no question</div>
+                    }
                 </div>
+            </div>
+
+            <div class="row text-center" >
+                <br />
+                <input style="background-color: green; color: white" class="button-format" id="getReport" type="button" value="GET RESULTS" />
             </div>
         </div>
     </div>
 
 
-    <div id="right">
-        <h3>Questions</h3>
-        <div id="questions">
 
-            @{
-                int index = 0;
-            }
-
-            <input type="hidden" id="content" />
-            <input type="hidden" id="ans1" />
-            <input type="hidden" id="ans2" />
-            <input type="hidden" id="ans3" />
-            <input type="hidden" id="ans4" />
-            <input type="hidden" id="ans" />
-            <input type="hidden" id="image" />
-            <input type="hidden" id="time" />
-
-            @foreach (var item in Model.QuestionList) {
-
-                index++;
-
-                string contentID = "con" + index;
-                string ans1ID = "ans1" + index;
-                string ans2ID = "ans2" + index;
-                string ans3ID = "ans3" + index;
-                string ans4ID = "ans4" + index;
-                string ansID = "rightAns" + index;
-                string imageID = "image" + index;
-                string timeID = "time" + index;
-
-
-                <div class="aQue">
-                    <div class="content">
-
-                        <h3 id="@contentID">@item.Content</h3>
-                        A. <span id="@ans1ID">@item.AnsA</span><br />
-                        B. <span id="@ans2ID">@item.AnsB</span><br />
-                        C. <span id="@ans3ID">@item.AnsC</span><br />
-                        D. <span id="@ans4ID">@item.AnsD</span><br />
-                        Answer: <span id="@ansID">@item.Answer</span>
-                        Time: <span id="@timeID">@item.Time</span>
-
-                        <br />
-                        <input type="submit" value="SEND QUESTION" class="send" onclick="setValues(@index)" />
-
-                    </div>
-                    <div class="queImg">
-                        <img id="@imageID" src="~/resources/images/QuestionImages/@item.Image" />
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-
-    <div>
-        <input id="getReport" type="button" value="GET RESULTS" />
-    </div>
 
     <script>
+        var main = $.connection.mainHub;
+
+
         function setValues(index) {
             $("#content").val($("#con" + index).html());
             $("#ans1").val($("#ans1" + index).html());
@@ -120,15 +128,9 @@
             $("#time").val($("#time" + index).html());
             $("#ans").val($("#rightAns" + index).html());
             $("#image").val($("#image" + index).attr('src'));
-
-            var main = $.connection.mainHub;
-
-            $("#getReport").click(function () {
-                main.server.summaryResult(@ViewBag.quizPIN);
-            });
+                        
 
             $.connection.hub.start().done(function () {
-
 
                 main.server.sendQuestionsToClient(
                     $("#content").val(), $("#ans1").val(), $("#ans2").val(),
@@ -137,7 +139,12 @@
             });
         }
 
-
+        $(function () {
+            $("#getReport").click(function () {
+                main.server.summaryResult(@ViewBag.quizPIN);
+            });
+        });
+       
     </script>
 </body>
 </html>

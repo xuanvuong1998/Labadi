@@ -10,8 +10,7 @@ namespace Project_Try1.Controllers
     public class PlayQuizController : Controller
     {
         // GET: PlayQuiz
-        
-        
+                
         public ActionResult Play(string quizID) {
                         
             if (quizID == null) {
@@ -20,8 +19,7 @@ namespace Project_Try1.Controllers
             QuizBank bank = new QuizBank();
 
             Quiz q = bank.FindQuizByID(int.Parse(quizID));
-            return View("Index", q);
-        
+            return View("Index", q);        
         }
         
         public ActionResult Start(string quizID, string quizPIN) {
@@ -29,6 +27,13 @@ namespace Project_Try1.Controllers
 
             Quiz q = bank.FindQuizByID(int.Parse(quizID));
 
+            
+
+            q.Plays++;
+
+            bank.UpdatePlays(q);
+
+            
             ViewBag.quizPIN = quizPIN;
             
             return View("GameBoard", q);

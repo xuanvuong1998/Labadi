@@ -19,8 +19,8 @@ namespace Project_Try1.Controllers
         public ActionResult Home()
         {   
             return RedirectToAction("GetQuizzes");
-        }
-        [OutputCache(Duration = 30)]
+        }        
+
         public ActionResult GetQuizzes(int? pageNum) {
             pageNum = pageNum ?? 1;
             ViewBag.IsEndOfQuizzes = false;
@@ -32,8 +32,8 @@ namespace Project_Try1.Controllers
                 return PartialView("DisplayQuiz", quizzes);
             }
             ViewBag.QuizBank = quizzes;
-            string time = DateTime.Now.ToString();
-            ViewBag.time = time;
+            /*string time = DateTime.Now.ToString();
+            ViewBag.time = time; */
             return View("Home");
             
         }
@@ -42,7 +42,6 @@ namespace Project_Try1.Controllers
             QuizBank bank = new QuizBank();
             return bank.LoadQuizzesPerPage(QuizPerPage, pageNum);
         }
-
 
         public RedirectToRouteResult Logout()
         {
