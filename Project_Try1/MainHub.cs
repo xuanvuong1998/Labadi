@@ -74,7 +74,7 @@ namespace Project_Try1 {
                 list.Add(new KeyValuePair<string, int>(players[i].Name, correctsNum[waitingPlayers[i]]));
             }
 
-            list.OrderBy(x => x.Value);
+            list = list.OrderBy(x => x.Value).ToList();
             
             for(int i = list.Count - 1; i >= 0; i--) {
                 summary += list[i].Key + " - " + list[i].Value + " Points";

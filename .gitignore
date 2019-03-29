@@ -273,3 +273,4 @@ __pycache__/
 /Project_Try1/Controllers/JoinQuizController.cs
 /Project_Try1/Controllers
 /Project_Try1/App_Start/BundleConfig.cs
+*.pubxml
