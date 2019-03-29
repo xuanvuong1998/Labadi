@@ -96,7 +96,7 @@ $(function () {
         var list = summary.split(';');
 
         list.forEach(function (item) {
-            $("#summary").append("<div>" + htmlEncode(item) + "</div><br/>");
+            $("#summary").append("<div class='button-format div-result'>" + htmlEncode(item) + "</div><br/>");
         });
 
         //$("#summary").html(summary);

@@ -14,23 +14,55 @@
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
     <script src="~/signalr/hubs"></script>
+    <link href="~/Content/home.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/myquiz.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/editQuiz.css" rel="stylesheet" type="text/css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Open+Sans+Condensed:300|Righteous" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
+    <style>
+        .ul-playing {
+            margin: auto;
+            width: 300px;
+        }
+
+        li {
+            list-style-type: none;
+            background-color: deepskyblue;
+            color: midnightblue;
+            margin-bottom: 30px;
+        }
+        .aaaa {
+            
+            margin: auto;
+            width: 300px;
+            
+        }
+    </style>
 </head>
 <body>
 
-    PIN TO JOIN:
-    <h1 id="pin"></h1>
-        
-    <h2>Waiting for PLAYERS</h2>
+    <h2 id="pageHeader" class="create-quiz-title-page">PIN TO JOIN <span style="color: crimson!important" class="create-quiz-title-page" id="pin"></span></h2>
     <div class="container">
-        <ul id="discussion"></ul>
+
+
+        <div class="row text-center ul-playing">
+            <ul id="discussion"></ul>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="text-center aaaa">
+            @using (Html.BeginForm("Start", "PlayQuiz", FormMethod.Post, new { style = "display: inline-block; " }))
+            {
+
+                <input id="quizPIN" type="hidden" name="quizPIN" />
+                <input type="hidden" name="quizID" value="@Model.ID" /><br />
+                <input style="font-size: 40px;line-height: 80px;height: 100px; width: 300px;padding: 10px 20px" class = "button-format" id="start" type="submit" value="Play" />
+            }
+        </div>
     </div>
 
-    @using (Html.BeginForm("Start", "PlayQuiz", FormMethod.Post, new { style = "display: inline-block;" })) {
-        
-        <input id="quizPIN" type="hidden" name="quizPIN"/>
-        <input type="hidden" name="quizID" value="@Model.ID" /><br />
-        <input class="btn btn-danger" id="start" type="submit" value="Play" />
-    }
 
     <script>
         function generateRandomPIN() {
@@ -41,7 +73,7 @@
             // Reference the auto-generated proxy for the hub.
             var main = $.connection.mainHub;
             // Create a function that the hub can call back to display messages.
-                        
+
 
             main.client.sendErr = function (mess) {
                 Location.reload(true);
@@ -54,12 +86,13 @@
 
             main.client.notify = function (username) {
                 // Add the message to the page.
-                $('#discussion').append('<li><strong>' + htmlEncode(username)
-                    + '</strong>: ' + '</li>');
+                $('#discussion').append('<li class="button-format" ><strong>' + htmlEncode(username)
+                    + '</strong> ' + '</li>');
+
             };
             // Get the user name and store it to prepend to messages.
 
-            $.connection.hub.start().done(function () {                
+            $.connection.hub.start().done(function () {
                 $(document).ready(function () {
                     main.server.initQuiz(generateRandomPIN());
                 });

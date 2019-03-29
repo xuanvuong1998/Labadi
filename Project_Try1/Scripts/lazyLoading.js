@@ -3,8 +3,11 @@
 
 var scrollHandler = function () {
     //alert($(document).height() + " " + $(document).width() + " " + $(window).height() + " " + $(window).width());
-
-    if ($(document).scrollTop() >= page * $(".quiz-home").height() * 0.4) {        
+    var scale = 0.3;
+    if (page > 1) {
+        scale = 1;
+    }
+    if ($(document).scrollTop() >= page * $(".quiz-home").height() * scale) {        
         loadQuizzes(url);
     }
 }

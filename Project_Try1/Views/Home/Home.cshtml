@@ -36,8 +36,8 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
 
-                    <li class="hidden">
-
+                    <li class="page-scroll">
+                        @Html.ActionLink("Play Game", "Join", "JoinQuiz")
                     </li>
                     <li class="page-scroll">
                         @if (Session["creator"] == null)
