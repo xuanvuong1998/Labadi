@@ -119,11 +119,28 @@
 
                     <div class="col-md-6 col-xs-12 question-title-edit-quiz">
                         <div class="content">@item.Content</div>
-                        <div style="color: blueviolet">A. @item.AnsA</div>
-                        <div style="color: darkcyan">B. @item.AnsB</div>
-                        <div style="color: deeppink">C. @item.AnsC</div>
-                        <div style="color: goldenrod">D. @item.AnsD</div>
-                        <div style="color: black">=> Answer: @item.Answer</div>                        
+
+                        @if (item.Answer.Equals("A")) {
+                            <div style="color: deeppink">A.@item.AnsA </div>
+                        } else {
+                            <div style="color: darkcyan">A.@item.AnsA</div>
+                        }
+                        @if (item.Answer.Equals("B")) {
+                            <div style="color: deeppink">B.@item.AnsB </div>
+                        } else {
+                            <div style="color: darkcyan">B.@item.AnsB</div>
+                        }
+                        @if (item.Answer.Equals("C")) {
+                            <div style="color: deeppink">C.@item.AnsC </div>
+                        } else {
+                            <div style="color: darkcyan">C.@item.AnsC</div>
+                        }
+                        @if (item.Answer.Equals("D")) {
+                            <div style="color: deeppink">D.@item.AnsD </div>
+                        } else {
+                            <div style="color: darkcyan">D.@item.AnsD</div>
+                        }
+
                     </div>
                     <div class="col-md-2 col-xs-12">
                         <span class="button-format">Time: @item.Time s</span><br />
@@ -157,8 +174,6 @@
 
             }
         }
-
-
     </div>
    
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

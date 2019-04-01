@@ -14,7 +14,8 @@ namespace Project_Try1.Controllers {
         [Authorize]
         
         public ActionResult Index() {
-            
+
+            Session["QuestionList"] = new List<Question>();
             return View("CreateNewQuiz");
         }
 
@@ -69,26 +70,22 @@ namespace Project_Try1.Controllers {
         }
         public ActionResult DeleteQuestion(string queID)
         {
-            QuestionDM queDM = new QuestionDM();  
-
-            var tmp = Session["QuestionList"];
-
-            List<Question> list;
-            if (tmp == null)
-            {
-                list = new List<Question>();
-            }
-            else
-            {
-                list = tmp as List<Question>;
-            }
-
-            int a = int.Parse(queID);
-           Question q = list.SingleOrDefault(x => x.ID == int.Parse(queID)) ;
-           list.Remove(q);
+            QuestionDM queDM = new QuestionDM();
+            
+            List<Question> list = Session["QuestionList"] as List<Question>;            
+            
+            Question q = list.SingleOrDefault(x => x.ID == int.Parse(queID));
+            list.Remove(q);
            
             return View("AddQuestion");
 
+        }
+
+        private int findTemporaryMaxID() {
+            var list = Session["QuestionList"] as List<Question>;
+
+            if (list.Count == 0) return 1;
+            return list[list.Count - 1].ID + 1;
         }
 
         [Authorize]
@@ -97,17 +94,9 @@ namespace Project_Try1.Controllers {
             if (Session["Image"] == null)
             {
                 return View("CreateNewQuiz");
-            }
-            var tmp = Session["QuestionList"];
-
-            List<Question> list;
-            if (tmp == null) {
-                list = new List<Question>();
-            }
-            else
-            {
-                list = tmp as List<Question>;
-            }
+            }            
+           
+            List<Question> list = Session["QuestionList"] as List<Question>;
 
             bool isPostBck = list.SingleOrDefault(x => x.Content.Equals(frm["TxtContent"])) != null;
 
@@ -148,6 +137,7 @@ namespace Project_Try1.Controllers {
             // Question tmp = list.SingleOrDefault(qs => qs.Content == content);
 
             Question q = new Question {
+                ID = findTemporaryMaxID(),
                 Content = frm["TxtContent"],
                 AnsA = c1,
                 AnsB = c2,
@@ -207,7 +197,6 @@ namespace Project_Try1.Controllers {
                     item.QuizID = q.ID;
                     q.QuestionList.Add(item);
                 }
-
             }
             quizBank.AddNewQuiz(q);
 
